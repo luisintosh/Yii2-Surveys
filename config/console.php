@@ -25,6 +25,11 @@ $config = [
         'db' => $db,
     ],
     'params' => $params,
+    'modules' => [
+        'user' => [
+            'class' => 'app\modules\user\Module',
+        ],
+    ],
     /*
     'controllerMap' => [
         'fixture' => [ // Fixture generation command line.

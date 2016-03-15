@@ -21,7 +21,8 @@
         "bower-asset/admin-lte": "*",
         "bower-asset/fontawesome": "*",
         "bower-asset/ionicons": "*",
-        "bower-asset/raphael": "*"
+        "bower-asset/raphael": "*",
+        "amnah/yii2-user": "^5.0"
     },
     "require-dev": {
         "yiisoft/yii2-codeception": "*",
