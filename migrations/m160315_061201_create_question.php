@@ -90,10 +90,11 @@ class m160315_061201_create_question extends Migration
 
     public function down()
     {
-        $this->dropTable('input_type');
-        $this->dropTable('group_type');
-        $this->dropTable('question');
-        $this->dropTable('question_extraitem');
+
         $this->dropTable('question_option');
+        $this->dropTable('question_extraitem');
+        $this->dropTable('question');
+        $this->dropTable('group_type');
+        $this->dropTable('input_type');
     }
 }

@@ -40,8 +40,8 @@ class m160315_061212_create_contacts extends Migration
 
     public function down()
     {
-        $this->dropTable('contact_list');
-        $this->dropTable('contact');
         $this->dropTable('form_contacts');
+        $this->dropTable('contact');
+        $this->dropTable('contact_list');
     }
 }

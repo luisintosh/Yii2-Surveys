@@ -17,6 +17,7 @@ class m160315_061141_create_form extends Migration
             'id_user' => $this->integer()->notNull(),
             'title' => $this->string()->notNull()->unique(),
             'description' => $this->text(),
+            'logo_url' => $this->string(),
             'created_at' => $this->integer(),
             'updated_at' => $this->integer(),
         ], $tableOptions);
@@ -65,9 +66,9 @@ class m160315_061141_create_form extends Migration
 
     public function down()
     {
-        $this->dropTable('form');
-        $this->dropTable('form_design');
-        $this->dropTable('form_preferences');
         $this->dropTable('form_section');
+        $this->dropTable('form_preferences');
+        $this->dropTable('form_design');
+        $this->dropTable('form');
     }
 }
