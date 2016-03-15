@@ -7,8 +7,10 @@ use yii\helpers\Html;
 use yii\bootstrap\Nav;
 use yii\bootstrap\NavBar;
 use yii\widgets\Breadcrumbs;
+use app\assets\AdminlteAsset;
 use app\assets\AppAsset;
 
+AdminlteAsset::register($this);
 AppAsset::register($this);
 ?>
 <?php $this->beginPage() ?>
