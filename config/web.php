@@ -51,6 +51,9 @@ $config = [
             ],
         ],
         */
+        'settings' => [
+          'class' => 'app\components\SettingsComponent',
+        ],
     ],
     'params' => $params,
     'modules' => [
