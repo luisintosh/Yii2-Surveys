@@ -1,6 +1,8 @@
 <?php
 
 $params = require(__DIR__ . '/params.php');
+/* Include debug functions */
+require_once(__DIR__.'/functions.php');
 
 $config = [
     'id' => 'basic',
