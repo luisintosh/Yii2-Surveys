@@ -174,7 +174,7 @@ AppAsset::register($this);
   <div class="content-wrapper">
     <!-- Main content -->
     <section class="container container-app">
-      <?= $content ?>
+        <?= $content ?>
     </section>
     <!-- /.content -->
   </div>
@@ -189,6 +189,8 @@ AppAsset::register($this);
 <div id="loading"><i class="fa fa-refresh fa-5x fa-spin"></i></div>
 <!-- Go to www.addthis.com/dashboard to customize your tools -->
 <script type="text/javascript" src="//s7.addthis.com/js/300/addthis_widget.js#pubid=ra-56ed7f8dd41f7d00"></script>
+
+<?= $this->render('alerts') ?>
 
 <?php $this->endBody() ?>
 </body>

@@ -4,8 +4,8 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "fdcde6f67d8550168427b2d1331e8188",
-    "content-hash": "8fc139a84d95a368e8e44b5292ba146e",
+    "hash": "1bb2082d48704b3ecb4e99357e5ef42d",
+    "content-hash": "bf27532c92a6b752ea6d8bae80feab11",
     "packages": [
         {
             "name": "amnah/yii2-user",
@@ -211,47 +211,6 @@
             "description": "Font Awesome"
         },
         {
-            "name": "bower-asset/ionicons",
-            "version": "v2.0.1",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/driftyco/ionicons.git",
-                "reference": "ecb4b806831005c25b97ed9089fbb1d7dcc0879c"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/driftyco/ionicons/zipball/ecb4b806831005c25b97ed9089fbb1d7dcc0879c",
-                "reference": "ecb4b806831005c25b97ed9089fbb1d7dcc0879c",
-                "shasum": ""
-            },
-            "type": "bower-asset-library",
-            "extra": {
-                "bower-asset-main": [
-                    "css/ionicons.css",
-                    "fonts/*"
-                ],
-                "bower-asset-ignore": [
-                    "**/.*",
-                    "builder",
-                    "node_modules",
-                    "bower_components",
-                    "test",
-                    "tests"
-                ]
-            },
-            "license": [
-                "MIT"
-            ],
-            "description": "Ionicons - free and beautiful icons from the creators of Ionic Framework",
-            "keywords": [
-                "fonts",
-                "icon font",
-                "icons",
-                "ionic",
-                "web font"
-            ]
-        },
-        {
             "name": "bower-asset/jquery",
             "version": "2.2.2",
             "source": {
@@ -434,6 +393,31 @@
                 "input",
                 "switch"
             ]
+        },
+        {
+            "name": "bower-asset/toastr",
+            "version": "2.1.2",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/johnpapa/toastr-bower.git",
+                "reference": "e648a870a60103bbc3986c1fe2b2de86ea4a9569"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/johnpapa/toastr-bower/zipball/e648a870a60103bbc3986c1fe2b2de86ea4a9569",
+                "reference": "e648a870a60103bbc3986c1fe2b2de86ea4a9569",
+                "shasum": ""
+            },
+            "require": {
+                "bower-asset/jquery": ">=1.6.3"
+            },
+            "type": "bower-asset-library",
+            "extra": {
+                "bower-asset-main": [
+                    "toastr.js",
+                    "toastr.css"
+                ]
+            }
         },
         {
             "name": "bower-asset/transitionize",
