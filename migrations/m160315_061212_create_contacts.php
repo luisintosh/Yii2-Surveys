@@ -15,8 +15,8 @@ class m160315_061212_create_contacts extends Migration
         $this->createTable('contact_list', [
             'id' => $this->primaryKey(),
             'title' => $this->string(),
-            'created_at' => $this->integer(),
-            'updated_at' => $this->integer(),
+            'created_at' => $this->timestamp(),
+            'updated_at' => $this->timestamp(),
         ], $tableOptions);
 
         $this->createTable('contact', [
@@ -27,20 +27,20 @@ class m160315_061212_create_contacts extends Migration
         ], $tableOptions);
 
         // relacion muchos a muchos
-        $this->createTable('form_contacts', [
+        $this->createTable('survey_contacts', [
             'id' => $this->primaryKey(),
-            'id_form' => $this->integer()->notNull(),
+            'id_survey' => $this->integer()->notNull(),
             'id_contact_list' => $this->integer()->notNull(),
         ], $tableOptions);
 
         $this->addForeignKey('fk_contact_list', 'contact', 'id_contact_list', 'contact_list', 'id', 'CASCADE', 'CASCADE');
-        $this->addForeignKey('fk_enc_list_enc', 'form_contacts', 'id_form', 'form', 'id', 'CASCADE', 'CASCADE');
-        $this->addForeignKey('fk_rel_lc_enc', 'form_contacts', 'id_contact_list', 'contact_list', 'id', 'CASCADE', 'CASCADE');
+        $this->addForeignKey('fk_enc_list_enc', 'survey_contacts', 'id_survey', 'survey', 'id', 'CASCADE', 'CASCADE');
+        $this->addForeignKey('fk_rel_lc_enc', 'survey_contacts', 'id_contact_list', 'contact_list', 'id', 'CASCADE', 'CASCADE');
     }
 
     public function down()
     {
-        $this->dropTable('form_contacts');
+        $this->dropTable('survey_contacts');
         $this->dropTable('contact');
         $this->dropTable('contact_list');
     }

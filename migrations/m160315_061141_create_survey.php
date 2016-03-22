@@ -2,7 +2,7 @@
 
 use yii\db\Migration;
 
-class m160315_061141_create_form extends Migration
+class m160315_061141_create_survey extends Migration
 {
     public function up()
     {
@@ -12,28 +12,28 @@ class m160315_061141_create_form extends Migration
             $tableOptions = 'CHARACTER SET utf8 COLLATE utf8_unicode_ci ENGINE=InnoDB';
         }
 
-        $this->createTable('form', [
+        $this->createTable('survey', [
             'id' => $this->primaryKey(6),
             'id_user' => $this->integer()->notNull(),
-            'title' => $this->string()->notNull()->unique(),
+            'title' => $this->string()->notNull(),
             'description' => $this->text(),
+            'status' => $this->integer()->notNull()->defaultValue(0),
             'logo_url' => $this->string(),
-            'created_at' => $this->integer(),
-            'updated_at' => $this->integer(),
+            'created_at' => $this->timestamp(),
+            'updated_at' => $this->timestamp(),
         ], $tableOptions);
 
-        $this->createTable('form_design', [
+        $this->createTable('survey_design', [
             'id' => $this->primaryKey(),
-            'id_form' => $this->integer()->notNull(),
+            'id_survey' => $this->integer()->notNull(),
             'color' => $this->string(),
             'font_text' => $this->integer(),
             'background_img' => $this->string(),
         ], $tableOptions);
 
-        $this->createTable('form_preferences', [
+        $this->createTable('survey_preferences', [
             'id' => $this->primaryKey(),
-            'id_form' => $this->integer()->notNull(),
-            'status' => $this->integer()->notNull()->defaultValue(0),
+            'id_survey' => $this->integer()->notNull(),
             'start_at' => $this->dateTime()->notNull(),
             'end_at' => $this->dateTime(),
             'end_msg' => $this->text(),
@@ -51,24 +51,24 @@ class m160315_061141_create_form extends Migration
             'redirection_url' => $this->string(),
         ], $tableOptions);
 
-        $this->createTable('form_section', [
+        $this->createTable('survey_section', [
             'id' => $this->primaryKey(),
-            'id_form' => $this->integer()->notNull(),
+            'id_survey' => $this->integer()->notNull(),
             'title' => $this->string(),
             'description' => $this->text(),
         ], $tableOptions);
 
-        $this->addForeignKey('fk_form_user', 'form', 'id_user', 'user', 'id', 'CASCADE', 'CASCADE');
-        $this->addForeignKey('fk_design_form', 'form_design', 'id_form', 'form', 'id', 'CASCADE', 'CASCADE');
-        $this->addForeignKey('fk_preferences_form', 'form_preferences', 'id_form', 'form', 'id', 'CASCADE', 'CASCADE');
-        $this->addForeignKey('fk_section_form', 'form_section', 'id_form', 'form', 'id', 'CASCADE', 'CASCADE');
+        $this->addForeignKey('fk_survey_user', 'survey', 'id_user', 'user', 'id', 'CASCADE', 'CASCADE');
+        $this->addForeignKey('fk_design_survey', 'survey_design', 'id_survey', 'survey', 'id', 'CASCADE', 'CASCADE');
+        $this->addForeignKey('fk_preferences_survey', 'survey_preferences', 'id_survey', 'survey', 'id', 'CASCADE', 'CASCADE');
+        $this->addForeignKey('fk_section_survey', 'survey_section', 'id_survey', 'survey', 'id', 'CASCADE', 'CASCADE');
     }
 
     public function down()
     {
-        $this->dropTable('form_section');
-        $this->dropTable('form_preferences');
-        $this->dropTable('form_design');
-        $this->dropTable('form');
+        $this->dropTable('survey_section');
+        $this->dropTable('survey_preferences');
+        $this->dropTable('survey_design');
+        $this->dropTable('survey');
     }
 }

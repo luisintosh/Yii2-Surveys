@@ -90,7 +90,7 @@ class m160201_053226_init_user extends Migration
             ['client', 0, gmdate('Y-m-d H:i:s')],
         ]);
 
-        // insert admin user: neo/neo
+        // insert admin user: admin/admin
         $security = Yii::$app->security;
         $columns = ['role_id', 'email', 'username', 'password', 'status', 'created_at', 'access_token', 'auth_key'];
         $this->batchInsert('{{%user}}', $columns, [
@@ -109,7 +109,7 @@ class m160201_053226_init_user extends Migration
         // insert profile data
         $columns = ['user_id', 'full_name', 'created_at'];
         $this->batchInsert('{{%profile}}', $columns, [
-            [1, 'Administrador', gmdate('Y-m-d H:i:s')],
+            [1, 'Admin', gmdate('Y-m-d H:i:s')],
         ]);
     }
 
