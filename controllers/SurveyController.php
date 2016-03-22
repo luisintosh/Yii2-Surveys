@@ -123,14 +123,26 @@ class SurveyController extends \yii\web\Controller
       }
     }
 
-    public function actionOptions()
+    public function actionPreferences($id)
     {
-        return $this->render('options');
+        Yii::$app->getSession()->setFlash('success', 'Hola');
+        $model = $this->findModel($id);
+
+        if ($model->load(Yii::$app->request->post()) && $model->save()) {
+            return $this->redirect(['preferences']);
+        }
+
+        return $this->render('preferences', [
+            'model' => $model,
+        ]);
     }
 
-    public function actionDesign()
+    public function actionDesign($id)
     {
-        return $this->render('design');
+        $model = $this->findModel($id);
+        return $this->render('design', [
+            'model' => $model,
+        ]);
     }
 
     public function actionDistribute($id)
