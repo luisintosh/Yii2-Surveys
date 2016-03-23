@@ -49,29 +49,8 @@ class SurveySearch extends Survey
             'query' => $query,
         ]);
 
-        // query
-        $createdFrom = '';
-        $createdTo = '';
-        $updatedFrom = '';
-        $updatedTo = '';
 
         $this->load($params);
-
-        if (!empty($this->created_at)) {
-            $createdArr = explode('-',$this->created_at);
-            $createdFrom = $createdArr[0];
-            $createdFrom = str_replace('/', '-', $createdFrom);
-            $createdTo = $createdArr[1];
-            $createdTo = str_replace('/', '-', $createdTo);
-        }
-        if (!empty($this->updated_at)) {
-            $updatedArr = explode('-',$this->created_at);
-            $updatedFrom = $updatedArr[0];
-            $updatedFrom = str_replace('/', '-', $updatedFrom);
-            $updatedTo = $updatedArr[1];
-            $updatedTo = str_replace('/', '-', $updatedTo);
-        }
-
 
         if (!$this->validate()) {
             // uncomment the following line if you do not want to return any records when validation fails
@@ -88,9 +67,22 @@ class SurveySearch extends Survey
 
         $query->andFilterWhere(['like', 'title', $this->title])
             ->andFilterWhere(['like', 'description', $this->description])
-            ->andFilterWhere(['like', 'logo_url', $this->logo_url])
-            ->andFilterWhere(['between', 'created_at', $createdFrom, $createdTo])
-            ->andFilterWhere(['between', 'updated_at', $updatedFrom, $updatedTo]);
+            ->andFilterWhere(['like', 'logo_url', $this->logo_url]);
+
+
+        if (!empty($this->created_at)) {
+            // $this->created_at = 2016/03/19 00:00:00 - 2016/03/20 00:00:00
+            $createdFrom = Yii::$app->formatter->asTimestamp(explode(' - ', $this->created_at)[0]); //1410488596
+            $createdTo = Yii::$app->formatter->asTimestamp(explode(' - ', $this->created_at)[1]);
+
+            $query->andFilterWhere(['between', 'created_at', $createdFrom, $createdTo]);
+        }
+        if (!empty($this->updated_at)) {
+            $updatedFrom = Yii::$app->formatter->asTimestamp(explode(' - ', $this->updated_at)[0]);
+            $updatedTo = Yii::$app->formatter->asTimestamp(explode(' - ', $this->updated_at)[1]);
+
+            $query->andFilterWhere(['between', 'updated_at', $updatedFrom, $updatedTo]);
+        }
 
         return $dataProvider;
     }

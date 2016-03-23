@@ -15,8 +15,8 @@ class m160315_061212_create_contacts extends Migration
         $this->createTable('contact_list', [
             'id' => $this->primaryKey(),
             'title' => $this->string(),
-            'created_at' => $this->timestamp(),
-            'updated_at' => $this->timestamp(),
+            'created_at' => $this->integer(),
+            'updated_at' => $this->integer(),
         ], $tableOptions);
 
         $this->createTable('contact', [

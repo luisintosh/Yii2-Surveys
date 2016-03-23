@@ -2,13 +2,12 @@
 
 use yii\helpers\Html;
 use yii\widgets\Menu;
-use app\models\Survey;
 
 
 /* @var $this yii\web\View */
 /* @var $model app\models\Survey */
 
-$this->title = Yii::t('app','Survey maker');
+$this->title = Yii::t('app','{title} | Survey Maker', ['title'=>$model->title]);
 ?>
 <section class="content-header">
     <h1><?= Html::encode($this->title) ?></h1>

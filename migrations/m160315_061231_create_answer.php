@@ -20,8 +20,8 @@ class m160315_061231_create_answer extends Migration
             'a_bool' => $this->boolean(),
             'a_date' => $this->date(),
             'a_time' => $this->time(),
-            'created_at' => $this->timestamp(),
-            'updated_at' => $this->timestamp(),
+            'created_at' => $this->integer(),
+            'updated_at' => $this->integer(),
         ], $tableOptions);
 
 
@@ -41,8 +41,8 @@ class m160315_061231_create_answer extends Migration
             'id' => $this->primaryKey(),
             'id_survey' => $this->integer()->notNull(),
             'text' => $this->text(),
-            'created_at' => $this->timestamp(),
-            'updated_at' => $this->timestamp(),
+            'created_at' => $this->integer(),
+            'updated_at' => $this->integer(),
         ], $tableOptions);
 
 

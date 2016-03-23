@@ -13,8 +13,10 @@ use app\models\QuestionOption;
 /* @var $form yii\widgets\ActiveForm */
 ?>
 
+<?php Pjax::begin(['id' => 'pjax-container']) ?>
+
 <div class="survey-form">
-    <?php Pjax::begin(['id' => 'pjax-container']) ?>
+
     <?php $form = ActiveForm::begin(['id' => 'datasurvey', 'options' => ['data-pjax' => true ]]); ?>
 
     <h2 class="page-header"><?= Yii::t('app','Data') ?></h2>
@@ -273,5 +275,7 @@ use app\models\QuestionOption;
     </p>
 
     <?php ActiveForm::end(); ?>
-    <?php Pjax::end() ?>
+
 </div>
+
+<?php Pjax::end() ?>

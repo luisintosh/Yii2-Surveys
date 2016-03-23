@@ -7,6 +7,9 @@ use yii\widgets\ActiveForm;
 /* @var $model app\models\Survey */
 
 $this->title = Yii::t('app','Create new survey');
+
+
+
 ?>
 
 <section class="content-header">
@@ -26,6 +29,9 @@ $this->title = Yii::t('app','Create new survey');
                     <?= $form->field($model, 'title')->label(false) ?>
                 </div>
             </div>
+        </div>
+        <div class="hide">
+            <?= Html::hiddenInput('utc_offset', '') ?>
         </div>
         <div class="col-md-12 text-right">
             <?= Html::submitButton(Yii::t('app','Next'), ['class' => 'btn btn-primary']) ?>

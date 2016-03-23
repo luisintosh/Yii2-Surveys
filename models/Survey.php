@@ -4,6 +4,7 @@ namespace app\models;
 
 use Yii;
 use app\modules\user\models\User;
+use yii\behaviors\TimestampBehavior;
 
 /**
  * This is the model class for table "survey".
@@ -27,6 +28,7 @@ use app\modules\user\models\User;
  */
 class Survey extends \yii\db\ActiveRecord
 {
+
     /**
      * @inheritdoc
      */
@@ -69,12 +71,7 @@ class Survey extends \yii\db\ActiveRecord
     public function behaviors()
     {
         return [
-            'timestamp' => [
-                'class' => 'yii\behaviors\TimestampBehavior',
-                'value' => function ($event) {
-                    return gmdate("Y-m-d H:i:s");
-                },
-            ],
+            TimestampBehavior::className(),
         ];
     }
 
@@ -134,6 +131,17 @@ class Survey extends \yii\db\ActiveRecord
         return $this->hasMany(SurveySection::className(), ['id_survey' => 'id']);
     }
 
+    public function doPreferencesNDesign()
+    {
+        $surveyPref = new SurveyPreferences();
+        $surveyPref->id_survey = $this->id;
+        $surveyPref->start_at = time();
+
+        $surveyDesign = new SurveyDesign();
+        $surveyDesign->id_survey = $this->id;
+
+        return ($surveyPref->save() && $surveyDesign->save());
+    }
 
     /**
      * Create, load and save a set of models.
