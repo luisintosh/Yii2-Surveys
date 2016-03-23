@@ -49,7 +49,7 @@ class Question extends \yii\db\ActiveRecord
         return [
             'id' => Yii::t('app', 'ID'),
             'id_survey_section' => Yii::t('app', 'Id Survey Section'),
-            'id_group_type' => Yii::t('app', 'Id Group Type'),
+            'id_group_type' => Yii::t('app', 'Display format'),
             'title' => Yii::t('app', 'Title'),
             'optional' => Yii::t('app', 'Optional'),
             'add_textbox' => Yii::t('app', 'Add Textbox'),

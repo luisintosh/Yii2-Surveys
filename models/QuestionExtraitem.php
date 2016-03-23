@@ -34,7 +34,8 @@ class QuestionExtraitem extends \yii\db\ActiveRecord
         return [
             [['id_question'], 'required'],
             [['id_question'], 'integer'],
-            [['tip', 'image_url', 'videoyt_url', 'soundcloud_url'], 'string', 'max' => 255]
+            [['tip', 'image_url', 'videoyt_url', 'soundcloud_url'], 'string', 'max' => 255],
+            [['image_url', 'videoyt_url', 'soundcloud_url'], 'url'],
         ];
     }
 
@@ -47,9 +48,9 @@ class QuestionExtraitem extends \yii\db\ActiveRecord
             'id' => Yii::t('app', 'ID'),
             'id_question' => Yii::t('app', 'Id Question'),
             'tip' => Yii::t('app', 'Tip'),
-            'image_url' => Yii::t('app', 'Image Url'),
-            'videoyt_url' => Yii::t('app', 'Videoyt Url'),
-            'soundcloud_url' => Yii::t('app', 'Soundcloud Url'),
+            'image_url' => Yii::t('app', 'Add Image URL'),
+            'videoyt_url' => Yii::t('app', 'Add Youtube Video URL'),
+            'soundcloud_url' => Yii::t('app', 'Add Soundcloud URL'),
         ];
     }
 

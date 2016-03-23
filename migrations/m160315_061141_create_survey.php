@@ -27,7 +27,7 @@ class m160315_061141_create_survey extends Migration
             'id' => $this->primaryKey(),
             'id_survey' => $this->integer()->notNull(),
             'color' => $this->string(),
-            'font_text' => $this->integer(),
+            'font_text' => $this->string(),
             'background_img' => $this->string(),
         ], $tableOptions);
 

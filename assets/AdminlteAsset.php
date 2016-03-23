@@ -26,6 +26,7 @@ class AdminlteAsset extends AssetBundle
         'admin-lte/plugins/datepicker/datepicker3.css',
         'admin-lte/plugins/daterangepicker/daterangepicker-bs3.css',
         'admin-lte/plugins/bootstrap-wysihtml5/bootstrap3-wysihtml5.min.css',
+        'admin-lte/plugins/colorpicker/bootstrap-colorpicker.min.css',
         'switchery/dist/switchery.min.css',
         'toastr/toastr.min.css',
     ];
@@ -43,6 +44,7 @@ class AdminlteAsset extends AssetBundle
         'admin-lte/plugins/bootstrap-wysihtml5/bootstrap3-wysihtml5.all.min.js',
         'admin-lte/plugins/slimScroll/jquery.slimscroll.min.js',
         'admin-lte/plugins/fastclick/fastclick.js',
+        'admin-lte/plugins/colorpicker/bootstrap-colorpicker.min.js',
         'admin-lte/dist/js/app.js',
         'switchery/dist/switchery.min.js',
         'toastr/toastr.min.js',

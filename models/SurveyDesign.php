@@ -32,8 +32,9 @@ class SurveyDesign extends \yii\db\ActiveRecord
     {
         return [
             [['id_survey'], 'required'],
-            [['id_survey', 'font_text'], 'integer'],
-            [['color', 'background_img'], 'string', 'max' => 255]
+            [['id_survey'], 'integer'],
+            [['color', 'font_text', 'background_img'], 'string', 'max' => 255],
+            [['background_img'], 'url'],
         ];
     }
 
@@ -57,5 +58,25 @@ class SurveyDesign extends \yii\db\ActiveRecord
     public function getIdSurvey()
     {
         return $this->hasOne(Survey::className(), ['id' => 'id_survey']);
+    }
+
+
+    public static function getAllFonts()
+    {
+        $fontList = [
+            'Default',
+            'Roboto',
+            'Oswald',
+            'Montserrat',
+            'Ubuntu',
+            'Fjalla One',
+            'Indie Flower',
+            'Bitter',
+            'Lobster',
+            'Bree Serif',
+            'Chewy',
+        ];
+
+        return array_combine($fontList, $fontList);
     }
 }

@@ -29,6 +29,8 @@ use yii\behaviors\TimestampBehavior;
 class Survey extends \yii\db\ActiveRecord
 {
 
+    public static $other_option_id = 'other-option-kk908skl2cn';
+
     /**
      * @inheritdoc
      */
@@ -62,9 +64,9 @@ class Survey extends \yii\db\ActiveRecord
             'title' => Yii::t('app', 'Title'),
             'description' => Yii::t('app', 'Description'),
             'status' => Yii::t('app', 'Status'),
-            'logo_url' => Yii::t('app', 'Logo Url'),
-            'created_at' => Yii::t('app', 'Created At'),
-            'updated_at' => Yii::t('app', 'Updated At'),
+            'logo_url' => Yii::t('app', 'Logo URL'),
+            'created_at' => Yii::t('app', 'Created on'),
+            'updated_at' => Yii::t('app', 'Updated on'),
         ];
     }
 
@@ -139,6 +141,7 @@ class Survey extends \yii\db\ActiveRecord
 
         $surveyDesign = new SurveyDesign();
         $surveyDesign->id_survey = $this->id;
+        $surveyDesign->color = '#1977e5';
 
         return ($surveyPref->save() && $surveyDesign->save());
     }
@@ -195,7 +198,7 @@ class Survey extends \yii\db\ActiveRecord
                 $m->title = 'New Question...';
                 $success = $m->save();
 
-            } else if ($action['type'] === 'delete-opcion') {
+            } else if ($action['type'] === 'delete-option') {
                 $success = QuestionOption::findOne($action['option'])->delete();
 
             } else if ($action['type'] === 'new-option') {
@@ -204,12 +207,10 @@ class Survey extends \yii\db\ActiveRecord
                 $m->title = 'Answer...';
                 $success = $m->save();
 
-            }
-            else if ($action['type'] === 'delete-survey') {
+            } else if ($action['type'] === 'delete-survey') {
                 $success = Survey::findOne($action['survey'])->delete();
 
-            }
-            else if ($action['type'] === 'publish-survey') {
+            } else if ($action['type'] === 'publish-survey') {
                 $m = Survey::findOne($action['survey']);
                 $m->status = 1;
                 $success = $m->save();

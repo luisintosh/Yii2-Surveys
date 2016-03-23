@@ -2,6 +2,7 @@
 
 namespace app\controllers;
 
+use app\models\QuestionExtraitem;
 use Yii;
 use app\models\Survey;
 use app\models\SurveySearch;
@@ -91,6 +92,7 @@ class SurveyController extends \yii\web\Controller
           Survey::saveMultipleData(SurveySection::className(), $post);
           Survey::saveMultipleData(Question::className(), $post);
           Survey::saveMultipleData(QuestionOption::className(), $post);
+          Survey::saveMultipleData(QuestionExtraitem::className(), $post);
 
           // if is an Pjax request
           if (Yii::$app->request->isPjax && isset($post['action'])) {
@@ -124,7 +126,7 @@ class SurveyController extends \yii\web\Controller
         $survey = $this->findModel($id);
         $model = $survey->surveyPreferences[0];
         $post = Yii::$app->request->post();
-        //dd($post);
+
         if ($model->load($post)) {
             $model->start_at = Yii::$app->formatter->asTimestamp($post['start_at']);
             $model->end_at = Yii::$app->formatter->asTimestamp($post['end_at']);
@@ -143,8 +145,17 @@ class SurveyController extends \yii\web\Controller
 
     public function actionDesign($id)
     {
-        $model = $this->findModel($id);
+        $survey = $this->findModel($id);
+        $model = $survey->surveyDesigns[0];
+        $post = Yii::$app->request->post();
+
+        if ($model->load($post) && $model->save()) {
+
+            Yii::$app->getSession()->setFlash('success', Yii::t('app', 'Saved!'));
+        }
+
         return $this->render('design', [
+            'survey' => $survey,
             'model' => $model,
         ]);
     }

@@ -20,4 +20,13 @@ $(function () {
             $('#password_string').toggle('slow');
         });
 
+    // color picker
+    $('.colorpicker').colorpicker();
+
+    // font picker
+    $('#surveydesign-font_text option').each(function (e, i) {
+        var fontFam = '"'+ this.value +'", sans-serif';
+        $(this).css({'font-family': fontFam});
+    });
+
 });

@@ -47,6 +47,7 @@ class SurveyPreferences extends \yii\db\ActiveRecord
             [['end_text'], 'string'],
             [['password_string', 'end_redirect'], 'string', 'max' => 255],
             [['id_survey'], 'exist', 'skipOnError' => true, 'targetClass' => Survey::className(), 'targetAttribute' => ['id_survey' => 'id']],
+            [['end_redirect'], 'url'],
         ];
     }
 
