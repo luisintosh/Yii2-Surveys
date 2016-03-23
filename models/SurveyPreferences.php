@@ -3,30 +3,27 @@
 namespace app\models;
 
 use Yii;
+use yii\behaviors\TimestampBehavior;
 
 /**
  * This is the model class for table "survey_preferences".
  *
  * @property integer $id
  * @property integer $id_survey
- * @property integer $status
  * @property string $start_at
  * @property string $end_at
- * @property string $end_msg
- * @property integer $onesection_perpage
- * @property integer $can_multiple_sendings
- * @property integer $can_returnsection
- * @property integer $show_section_number
- * @property integer $random_question
- * @property integer $show_progressbar
- * @property integer $email_notifications
- * @property integer $can_social_share
- * @property integer $private
- * @property string $private_password
- * @property integer $redirection_type
- * @property string $redirection_url
- *
- * @property Survey $idSurvey
+ * @property integer $sections_per_page
+ * @property integer $questions_per_page
+ * @property integer $allow_multi_submissions
+ * @property integer $show_question_number
+ * @property integer $randomize_questions
+ * @property integer $show_progress
+ * @property integer $send_response_notif
+ * @property integer $show_share_btns
+ * @property integer $password_protect
+ * @property string $password_string
+ * @property string $end_text
+ * @property string $end_redirect
  */
 class SurveyPreferences extends \yii\db\ActiveRecord
 {
@@ -45,10 +42,11 @@ class SurveyPreferences extends \yii\db\ActiveRecord
     {
         return [
             [['id_survey', 'start_at'], 'required'],
-            [['id_survey', 'onesection_perpage', 'can_multiple_sendings', 'can_returnsection', 'show_section_number', 'random_question', 'show_progressbar', 'email_notifications', 'can_social_share', 'private', 'redirection_type'], 'integer'],
+            [['id_survey', 'sections_per_page', 'questions_per_page', 'allow_multi_submissions', 'show_question_number', 'randomize_questions', 'show_progress', 'send_response_notif', 'show_share_btns', 'password_protect'], 'integer'],
             [['start_at', 'end_at'], 'safe'],
-            [['end_msg'], 'string'],
-            [['private_password', 'redirection_url'], 'string', 'max' => 255]
+            [['end_text'], 'string'],
+            [['password_string', 'end_redirect'], 'string', 'max' => 255],
+            [['id_survey'], 'exist', 'skipOnError' => true, 'targetClass' => Survey::className(), 'targetAttribute' => ['id_survey' => 'id']],
         ];
     }
 
@@ -62,27 +60,19 @@ class SurveyPreferences extends \yii\db\ActiveRecord
             'id_survey' => Yii::t('app', 'Id Survey'),
             'start_at' => Yii::t('app', 'Start At'),
             'end_at' => Yii::t('app', 'End At'),
-            'end_msg' => Yii::t('app', 'End Msg'),
-            'onesection_perpage' => Yii::t('app', 'Onesection Perpage'),
-            'can_multiple_sendings' => Yii::t('app', 'Can Multiple Sendings'),
-            'can_returnsection' => Yii::t('app', 'Can Returnsection'),
-            'show_section_number' => Yii::t('app', 'Show Section Number'),
-            'random_question' => Yii::t('app', 'Random Question'),
-            'show_progressbar' => Yii::t('app', 'Show Progressbar'),
-            'email_notifications' => Yii::t('app', 'Email Notifications'),
-            'can_social_share' => Yii::t('app', 'Can Social Share'),
-            'private' => Yii::t('app', 'Private'),
-            'private_password' => Yii::t('app', 'Private Password'),
-            'redirection_type' => Yii::t('app', 'Redirection Type'),
-            'redirection_url' => Yii::t('app', 'Redirection Url'),
+            'sections_per_page' => Yii::t('app', 'Display one section per page?'),
+            'questions_per_page' => Yii::t('app', 'Display one question per page?'),
+            'allow_multi_submissions' => Yii::t('app', 'Allow multiple submissions?'),
+            'show_question_number' => Yii::t('app', 'Display question numbers?'),
+            'randomize_questions' => Yii::t('app', 'Randomize questions order?'),
+            'show_progress' => Yii::t('app', 'Show progress bar?'),
+            'send_response_notif' => Yii::t('app', 'Receive response notifications by e-mail?'),
+            'show_share_btns' => Yii::t('app', 'Show social networks sharing plugin?'),
+            'password_protect' => Yii::t('app', 'Password protection?'),
+            'password_string' => Yii::t('app', 'Set your password'),
+            'end_text' => Yii::t('app', 'Show custom "Thank you" text'),
+            'end_redirect' => Yii::t('app', 'Redirect to own webpage (URL)'),
         ];
     }
 
-    /**
-     * @return \yii\db\ActiveQuery
-     */
-    public function getIdSurvey()
-    {
-        return $this->hasOne(Survey::className(), ['id' => 'id_survey']);
-    }
 }

@@ -58,16 +58,12 @@ class SurveyController extends \yii\web\Controller
     {
         $model = new Survey();
         $model->id_user = Yii::$app->user->id;
+        $post = Yii::$app->request->post();
 
-        if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            $surveyPref = new SurveyPreferences();
-            $surveyPref->id_survey = $model->id;
-            $surveyPref->start_at = date('Y-m-d H:i:s');
+        if ($model->load($post) && $model->save()) {
 
-            $surveyDesign = new SurveyDesign();
-            $surveyDesign->id_survey = $model->id;
 
-            if ( $surveyPref->save() && $surveyDesign->save() ) {
+            if ( $model->doPreferencesNDesign() ) {
                 return $this->redirect(['survey/maker', 'id' => $model->getId()]);
             }
             else {
@@ -125,14 +121,22 @@ class SurveyController extends \yii\web\Controller
 
     public function actionPreferences($id)
     {
-        Yii::$app->getSession()->setFlash('success', 'Hola');
-        $model = $this->findModel($id);
+        $survey = $this->findModel($id);
+        $model = $survey->surveyPreferences[0];
+        $post = Yii::$app->request->post();
+        //dd($post);
+        if ($model->load($post)) {
+            $model->start_at = Yii::$app->formatter->asTimestamp($post['start_at']);
+            $model->end_at = Yii::$app->formatter->asTimestamp($post['end_at']);
+            $model->save();
 
-        if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            return $this->redirect(['preferences']);
+            if ( $model->save() ) {
+                Yii::$app->getSession()->setFlash('success', Yii::t('app', 'Saved!'));
+            }
         }
 
         return $this->render('preferences', [
+            'survey' => $survey,
             'model' => $model,
         ]);
     }
