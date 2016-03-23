@@ -4,8 +4,8 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "1bb2082d48704b3ecb4e99357e5ef42d",
-    "content-hash": "bf27532c92a6b752ea6d8bae80feab11",
+    "hash": "adb4bfca28522efc5ef2f6447ec5ff7a",
+    "content-hash": "3b541556b1013318349705f497c09a01",
     "packages": [
         {
             "name": "amnah/yii2-user",
@@ -648,6 +648,43 @@
                 "mailer"
             ],
             "time": "2015-06-06 14:19:39"
+        },
+        {
+            "name": "yii2mod/yii2-timezone",
+            "version": "1.0.3",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/yii2mod/yii2-timezone.git",
+                "reference": "0d1d9bd0d41598bc1402977c7ea15148cb91c0a4"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/yii2mod/yii2-timezone/zipball/0d1d9bd0d41598bc1402977c7ea15148cb91c0a4",
+                "reference": "0d1d9bd0d41598bc1402977c7ea15148cb91c0a4",
+                "shasum": ""
+            },
+            "type": "yii2-extension",
+            "autoload": {
+                "psr-4": {
+                    "yii2mod\\timezone\\": ""
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Dmitry Semenov",
+                    "email": "disemx@gmail.com"
+                }
+            ],
+            "description": "Timezone helper",
+            "keywords": [
+                "component",
+                "yii2"
+            ],
+            "time": "2016-03-01 08:06:29"
         },
         {
             "name": "yiisoft/yii2",

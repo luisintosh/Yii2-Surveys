@@ -13,6 +13,9 @@ use yii\widgets\Menu;
 
 AdminlteAsset::register($this);
 AppAsset::register($this);
+
+// set timezone
+Yii::$app->setTimeZone(Yii::$app->timezone->name);
 ?>
 <?php $this->beginPage() ?>
 <!DOCTYPE html>
@@ -181,7 +184,7 @@ AppAsset::register($this);
   <!-- /.content-wrapper -->
   <footer class="main-footer">
     <div class="container">
-      <strong>Copyright &copy; <?= Yii::$app->name ?> <?= date('Y') ?> | <?= Yii::t('app','Developed by') ?> <a href="http://www.luism.net">Luis Mendieta</a>.</strong>
+      <strong>Copyright &copy; <?= Yii::$app->settings->get('app_name') ?> <?= date('Y') ?> | <?= Yii::t('app','Developed by') ?> <a href="http://www.luism.net">Luis Mendieta</a>.</strong>
     </div>
   </footer>
 </div>

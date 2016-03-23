@@ -7,7 +7,7 @@ require_once(__DIR__.'/functions.php');
 $config = [
     'id' => 'basic',
     'basePath' => dirname(__DIR__),
-    'bootstrap' => ['log'],
+    'bootstrap' => ['log','timezone'],
     'components' => [
         'request' => [
             // !!! insert a secret key in the following (if it is empty) - this is required by cookie validation
@@ -55,6 +55,10 @@ $config = [
         */
         'settings' => [
           'class' => 'app\components\SettingsComponent',
+        ],
+        'timezone' => [
+            'class' => 'yii2mod\timezone\Timezone',
+            'actionRoute' => '/site/timezone'
         ],
     ],
     'params' => $params,

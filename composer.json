@@ -23,7 +23,8 @@
     "bower-asset/raphael": "*",
     "bower-asset/switchery": "*",
     "bower-asset/toastr": "*",
-    "amnah/yii2-user": "^5.0"
+    "amnah/yii2-user": "^5.0",
+    "yii2mod/yii2-timezone": "*"
   },
   "require-dev": {
     "yiisoft/yii2-codeception": "*",
