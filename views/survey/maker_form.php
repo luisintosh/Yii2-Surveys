@@ -13,6 +13,13 @@ use app\models\QuestionExtraitem;
 /* @var $this yii\web\View */
 /* @var $model app\models\Survey */
 /* @var $form yii\widgets\ActiveForm */
+
+
+// keys
+$sectionN = 0;
+$questionN = 0;
+$optionN = 0;
+
 ?>
 
 <?php Pjax::begin(['id' => 'pjax-container']) ?>
@@ -63,23 +70,20 @@ use app\models\QuestionExtraitem;
             <?php
             $sections = SurveySection::find()->where(['id_survey' => $model->id])->all();
             if (count($sections) === 0) {
-                $section = new SurveySection();
-                $section->id_survey = $model->id;
-                $section->save();
-                $sections[] = $section;
+                $sections[] = SurveySection::create($model->id);
             }
-            foreach($sections as $cveSection => $MSection):
+            foreach($sections as $section):
                 ?>
 
                 <!-- SECTION -->
                 <div class="box box-solid box-primary">
                     <div class="box-header with-border">
-                        <h3 class="box-title"><?= Yii::t('app','Section {n}',['n'=>$cveSection+1]) ?></h3>
+                        <h3 class="box-title"><?= Yii::t('app','Section {n}',['n'=>++$sectionN]) ?></h3>
                         <div class="box-tools pull-right">
                             <button type="button" class="btn btn-box-tool" data-widget="collapse" data-toggle="tooltip" data-placement="top" title="<?= Yii::t('app','Minimize section') ?>">
                                 <i class="fa fa-minus"></i>
                             </button>
-                            <button type="button" class="btn btn-box-tool survey-action" data-action="delete-section" data-survey="<?= $model->id ?>" data-section="<?= $MSection->id ?>" data-toggle="tooltip" data-placement="top" title="<?= Yii::t('app','Delete section') ?>">
+                            <button type="button" class="btn btn-box-tool survey-action" data-action="delete-section" data-survey="<?= $model->id ?>" data-section="<?= $section->id ?>" data-toggle="tooltip" data-placement="top" title="<?= Yii::t('app','Delete section') ?>">
                                 <i class="fa fa-times"></i>
                             </button>
                         </div>
@@ -87,14 +91,14 @@ use app\models\QuestionExtraitem;
                     <div class="box-body">
 
                         <div class="hidden">
-                            <?= $form->field($MSection, "[{$cveSection}]".'id')->hiddenInput() ?>
+                            <?= $form->field($section, "[{$sectionN}]".'id')->hiddenInput() ?>
 
-                            <?= $form->field($MSection, "[{$cveSection}]".'id_survey')->hiddenInput() ?>
+                            <?= $form->field($section, "[{$sectionN}]".'id_survey')->hiddenInput() ?>
                         </div>
 
-                        <?= $form->field($MSection, "[{$cveSection}]".'title')->textInput(['maxlength' => true]) ?>
+                        <?= $form->field($section, "[{$sectionN}]".'title')->textInput(['maxlength' => true]) ?>
 
-                        <?= $form->field($MSection, "[{$cveSection}]".'description', ['options'=>['class' => 'wysihtml5-editor']])->textarea(['rows' => 5]) ?>
+                        <?= $form->field($section, "[{$sectionN}]".'description', ['options'=>['class' => 'wysihtml5-editor']])->textarea(['rows' => 5]) ?>
 
                         <br>
 
@@ -104,42 +108,34 @@ use app\models\QuestionExtraitem;
                             <h3 class="page-header"><?= Yii::t('app','Questions') ?></h3>
 
                             <?php
-                            $questions = Question::find()->where(['id_survey_section' => $MSection->id])->all();
+                            $questions = Question::find()->where(['id_survey_section' => $section->id])->all();
                             if (count($questions) === 0) {
-                                $question = new Question();
-                                $question->id_survey_section = $MSection->id;
-                                $question->id_group_type = 1; // short_answer
-                                $question->title = 'New question';
-                                $question->save();
-                                $questions[] = $question;
+                                $questions[] = Question::create($section->id, GroupType::$SINGLE_CHOICE, Yii::t('app','New question'));
                             }
-                            foreach($questions as $cveQuestion => $MQuestion):
-                                if ($MQuestion->id_survey_section === $MSection->id):
+                            foreach($questions as $question):
+                                if ($question->id_survey_section === $section->id):
                                     ?>
-
                                     <!-- QUESTION -->
                                     <div class="box box-dotted">
                                         <div class="box-header with-border">
                                             <div class="row">
                                                 <div class="col-sm-1">
-                                                    <h4>#<?= $cveQuestion+1 ?></h4>
+                                                    <h4>#<?= ++$questionN ?></h4>
                                                 </div>
                                                 <div class="col-sm-9 p-title">
                                                     <div class="hidden">
-                                                        <?= $form->field($MQuestion, "[{$cveQuestion}]".'id')->hiddenInput() ?>
+                                                        <?= $form->field($question, "[{$questionN}]".'id')->hiddenInput() ?>
 
-                                                        <?= $form->field($MQuestion, "[{$cveQuestion}]".'id_survey_section')->hiddenInput() ?>
+                                                        <?= $form->field($question, "[{$questionN}]".'id_survey_section')->hiddenInput() ?>
                                                     </div>
 
-                                                    <?= $form->field($MQuestion, "[{$cveQuestion}]".'title')->textInput(['maxlength' => true])->label(false) ?>
+                                                    <?= $form->field($question, "[{$questionN}]".'title')->textInput(['maxlength' => true])->label(false) ?>
                                                 </div>
                                                 <div class="col-sm-2 text-right">
                                                     <?php
-                                                    $questionExtraitem = QuestionExtraitem::find()->where(['id_question'=>$MQuestion->id])->one();
+                                                    $questionExtraitem = QuestionExtraitem::find()->where(['id_question'=>$question->id])->one();
                                                     if ($questionExtraitem === null) {
-                                                        $questionExtraitem = new QuestionExtraitem();
-                                                        $questionExtraitem->id_question = $MQuestion->id;
-                                                        $questionExtraitem->save();
+                                                        $questionExtraitem = QuestionExtraitem::create($question->id);
                                                     }
                                                     ?>
                                                     <div class="btn-group">
@@ -157,7 +153,7 @@ use app\models\QuestionExtraitem;
                                                         <button type="button" class="btn btn-default" data-widget="collapse"  data-toggle="tooltip" data-placement="top" title="<?= Yii::t('app','Minimize question') ?>">
                                                             <i class="fa fa-minus"></i>
                                                         </button>
-                                                        <button type="button" class="btn btn-default survey-action" data-widget="remove" data-action="delete-question" data-survey="<?= $model->id ?>" data-section="<?= $MSection->id ?>" data-question="<?= $MQuestion->id ?>" data-toggle="tooltip" data-placement="top" title="<?= Yii::t('app','Delete question') ?>">
+                                                        <button type="button" class="btn btn-default survey-action" data-widget="remove" data-action="delete-question" data-survey="<?= $model->id ?>" data-section="<?= $section->id ?>" data-question="<?= $question->id ?>" data-toggle="tooltip" data-placement="top" title="<?= Yii::t('app','Delete question') ?>">
                                                             <i class="fa fa-times"></i>
                                                         </button>
                                                     </div>
@@ -179,7 +175,7 @@ use app\models\QuestionExtraitem;
                                                                     <h4 class="modal-title"><?= $questionExtraitem->getAttributeLabel($extraItemLabel) ?></h4>
                                                                 </div>
                                                                 <div class="modal-body">
-                                                                    <?= $form->field($questionExtraitem, "[{$cveQuestion}]".$extraItemLabel)->input('text', ['placeholder'=>$questionExtraitem->getAttributeLabel($extraItemLabel)])->label(false) ?>
+                                                                    <?= $form->field($questionExtraitem, "[{$questionN}]".$extraItemLabel)->input('text', ['placeholder'=>$questionExtraitem->getAttributeLabel($extraItemLabel)])->label(false) ?>
                                                                 </div>
                                                             </div>
                                                         </div>
@@ -189,13 +185,12 @@ use app\models\QuestionExtraitem;
                                             <div class="pregunta-opc border-bottom padding15">
                                                 <div class="row">
                                                     <div class="col-sm-6">
-                                                        <!-- QUESTION TYPE -->
-                                                        <?= $form->field($MQuestion, "[{$cveQuestion}]".'id_group_type')->dropDownList(GroupType::getAllTypes()) ?>
-
+                                                        <strong><?= $question->getAttributeLabel('id_group_type') ?></strong>
+                                                        <p><?= GroupType::getTypeString($question->id_group_type) ?></p>
                                                     </div>
                                                     <div class="col-sm-6 text-right">
                                                         <!-- QUESTION PREFERENCES -->
-                                                        <?= $form->field($MQuestion, "[{$cveQuestion}]".'optional')->checkbox() ?>
+                                                        <?= $form->field($question, "[{$questionN}]".'optional')->checkbox() ?>
 
                                                     </div>
                                                 </div>
@@ -205,42 +200,41 @@ use app\models\QuestionExtraitem;
                                                 <ul class="question-options">
 
                                                     <?php
-                                                    $questionOptions = QuestionOption::find()->where(['id_question' => $MQuestion->id])->all();
+                                                    $questionOptions = QuestionOption::find()->where(['id_question' => $question->id])->all();
                                                     if (count($questionOptions) === 0) {
                                                         // other option
-                                                        $questionOption = new QuestionOption();
-                                                        $questionOption->id_question = $MQuestion->id;
-                                                        $questionOption->title = Survey::$other_option_id;
-                                                        $questionOption->save();
-                                                        $questionOptions[] = $questionOption;
+                                                        $questionOptions[] = QuestionOption::create($question->id, QuestionOption::$other_option_id);
                                                         // normal option
-                                                        $questionOption = new QuestionOption();
-                                                        $questionOption->id_question = $MQuestion->id;
-                                                        $questionOption->title = 'Answer...';
-                                                        $questionOption->save();
-                                                        $questionOptions[] = $questionOption;
+                                                        $questionOptions[] = QuestionOption::create($question->id, Yii::t('app','Answer'));
                                                     }
 
-                                                    foreach($questionOptions as $cveQOption => $MQOption):
-                                                        if ($MQOption->id_question === $MQuestion->id && $MQOption->title != Survey::$other_option_id):
+                                                    $questionElemVisible = ($question->id_group_type == GroupType::$SINGLE_CHOICE
+                                                        || $question->id_group_type == GroupType::$LINEAR_SCALE
+                                                        || $question->id_group_type == GroupType::$MULTIPLE_CHOICE);
+
+                                                    foreach($questionOptions as $questionOption):
+                                                        if ($questionOption->id_question === $question->id && $questionOption->title != QuestionOption::$other_option_id):
+                                                            ++$optionN;
                                                             ?>
 
                                                             <li>
                                                                 <div class="row">
                                                                     <div class="hidden">
-                                                                        <?= $form->field($MQOption, "[{$cveQOption}]".'id')->hiddenInput() ?>
+                                                                        <?= $form->field($questionOption, "[{$optionN}]".'id')->hiddenInput() ?>
 
-                                                                        <?= $form->field($MQOption, "[{$cveQOption}]".'id_question')->hiddenInput() ?>
+                                                                        <?= $form->field($questionOption, "[{$optionN}]".'id_question')->hiddenInput() ?>
                                                                     </div>
                                                                     <div class="col-sm-8">
 
-                                                                        <?= $form->field($MQOption, "[{$cveQOption}]".'title')->textInput(['maxlength' => true])->label(false) ?>
+                                                                        <?= $form->field($questionOption, "[{$optionN}]".'title')->textInput(['maxlength' => true])->label(false) ?>
 
                                                                     </div>
                                                                     <div class="col-sm-1">
-                                                                        <a href="#" class="btn btn-default trash-btn survey-action" data-action="delete-option" data-survey="<?= $model->id ?>" data-section="<?= $MSection->id ?>" data-question="<?= $MQuestion->id ?>" data-option="<?= $MQOption->id ?>" data-toggle="tooltip" data-placement="top" title="<?= Yii::t('app','Delete answer') ?>">
+                                                                        <?php if ($questionElemVisible): ?>
+                                                                        <a href="#" class="btn btn-default trash-btn survey-action" data-action="delete-option" data-survey="<?= $model->id ?>" data-section="<?= $section->id ?>" data-question="<?= $question->id ?>" data-option="<?= $questionOption->id ?>" data-toggle="tooltip" data-placement="top" title="<?= Yii::t('app','Delete answer') ?>">
                                                                             <i class="fa fa-trash-o"></i>
                                                                         </a>
+                                                                        <?php endif ?>
                                                                     </div>
                                                                 </div>
                                                             </li>
@@ -250,7 +244,7 @@ use app\models\QuestionExtraitem;
                                                     endforeach;
                                                     ?>
 
-                                                    <li class="textbox-option" style="display: <?= ($MQuestion['add_textbox']) ? 'block':'none' ?>">
+                                                    <li class="textbox-option" style="display: <?= ($question['add_textbox']) ? 'block':'none' ?>">
                                                         <div class="row">
                                                             <div class="col-sm-8">
                                                                 <input type="text" value="<?= Yii::t('app','Other...') ?>" maxlength="255" disabled>
@@ -259,12 +253,15 @@ use app\models\QuestionExtraitem;
                                                     </li>
                                                 </ul>
 
+                                                <?php if($questionElemVisible): ?>
                                                 <div>
-                                                    <span class="btn btn-link survey-action" data-action="new-option" data-survey="<?= $model->id ?>" data-section="<?= $MSection->id ?>" data-question="<?= $MQuestion->id ?>" data-option="<?= $MQOption->id ?>">
+                                                    <span class="btn btn-link survey-action" data-action="new-option" data-survey="<?= $model->id ?>" data-section="<?= $section->id ?>" data-question="<?= $question->id ?>" data-option="<?= $questionOption->id ?>">
                                                         <i class="fa fa-plus"></i> <?= Yii::t('app','Add answer') ?>
                                                     </span>
                                                 </div>
+                                                <?php endif ?>
 
+                                                <?php if($question->id_group_type == GroupType::$SINGLE_CHOICE): ?>
                                                 <div class="add-textbox-option">
                                                     <span class="btn btn-link">
                                                         <i class="fa fa-plus"></i>
@@ -272,9 +269,10 @@ use app\models\QuestionExtraitem;
                                                     </span>
                                                     <div class="hide">
                                                         <!-- ANSWER SETTINGS -->
-                                                        <?= $form->field($MQuestion, "[{$cveQuestion}]".'add_textbox')->checkbox() ?>
+                                                        <?= $form->field($question, "[{$questionN}]".'add_textbox')->checkbox() ?>
                                                     </div>
                                                 </div>
+                                                <?php endif ?>
 
                                             </div>
                                         </div>
@@ -284,12 +282,34 @@ use app\models\QuestionExtraitem;
                                 endif;
                             endforeach;
                             ?>
-
-
                             <!-- ADD QUESTION BUTTON -->
-                            <div class="text-center text-primary add-question survey-action" data-action="new-question" data-survey="<?= $model->id ?>" data-section="<?= $MSection->id ?>">
+                            <div class="text-center text-primary add-question"  data-toggle="modal" data-target="#modal-addquestion<?= $section->id ?>">
                                 <i class="fa fa-plus-circle"></i>
                                 <span><?= Yii::t('app','Add question') ?></span>
+                            </div>
+
+                            <div class="modal fade" id="modal-addquestion<?= $section->id ?>" tabindex="-1" role="dialog">
+                                <div class="modal-dialog" role="document">
+                                    <div class="modal-content">
+                                        <div class="modal-header">
+                                            <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                                            <h4 class="modal-title"><?= $question->getAttributeLabel('id_group_type') ?></h4>
+                                        </div>
+                                        <div class="modal-body">
+                                            <!-- QUESTION TYPE -->
+                                            <?php 
+                                            $newQuestion = new Question();
+                                            echo $form->field($newQuestion, '[selector]id_group_type')->dropDownList(GroupType::getAllTypes(), [
+                                                'class'=>'form-control group-type-selector',
+                                                'prompt'=>Yii::t('app','- Select a question type -'),
+                                                'data-action'=>'new-question',
+                                                'data-survey'=>$model->id,
+                                                'data-section'=>$section->id,
+                                            ])->label(false) 
+                                            ?>
+                                        </div>
+                                    </div>
+                                </div>
                             </div>
                         </div>
 
@@ -297,7 +317,7 @@ use app\models\QuestionExtraitem;
                 </div>
                 <!-- /SECTION -->
                 <!-- ADD SECTION BUTTON -->
-                <div class="text-center text-primary add-section survey-action" data-action="new-section" data-survey="<?= $model->id ?>" data-section="<?= $MSection->id ?>">
+                <div class="text-center text-primary add-section survey-action" data-action="new-section" data-survey="<?= $model->id ?>" data-section="<?= $section->id ?>">
                     <i class="fa fa-plus-circle"></i>
                     <span><?= Yii::t('app','Add section') ?></span>
                 </div>

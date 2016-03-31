@@ -17,6 +17,35 @@ use Yii;
  */
 class SurveyDesign extends \yii\db\ActiveRecord
 {
+    public static $fontList = [
+        'Default',
+        'Roboto',
+        'Oswald',
+        'Montserrat',
+        'Ubuntu',
+        'Fjalla One',
+        'Indie Flower',
+        'Bitter',
+        'Lobster',
+        'Bree Serif',
+        'Chewy',
+    ];
+
+    public static $colorList = [
+        '#525252',
+        '#e51c23',
+        '#e91e63',
+        '#9c27b0',
+        '#673ab7',
+        '#3f51b5',
+        '#5677fc',
+        '#03a9f4',
+        '#259b24',
+        '#8bc34a',
+        '#ff5722',
+        '#795548',
+    ];
+
     /**
      * @inheritdoc
      */
@@ -63,20 +92,11 @@ class SurveyDesign extends \yii\db\ActiveRecord
 
     public static function getAllFonts()
     {
-        $fontList = [
-            'Default',
-            'Roboto',
-            'Oswald',
-            'Montserrat',
-            'Ubuntu',
-            'Fjalla One',
-            'Indie Flower',
-            'Bitter',
-            'Lobster',
-            'Bree Serif',
-            'Chewy',
-        ];
+        return array_combine(SurveyDesign::$fontList, SurveyDesign::$fontList);
+    }
 
-        return array_combine($fontList, $fontList);
+    public static function getAllColors()
+    {
+        return array_combine(SurveyDesign::$colorList, SurveyDesign::$colorList);
     }
 }

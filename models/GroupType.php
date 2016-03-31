@@ -8,7 +8,7 @@ use Yii;
  * This is the model class for table "group_type".
  *
  * @property integer $id
- * @property integer $id_input_type
+ * @property string $input_type
  * @property string $name
  * @property string $description
  *
@@ -17,6 +17,26 @@ use Yii;
  */
 class GroupType extends \yii\db\ActiveRecord
 {
+
+    public static $input_types = [
+        'text',
+        'text_area',
+        'radio',
+        'checkbox',
+        'date',
+        'time',
+    ];
+
+    public static $TEXT_ANSWER = 1;
+    public static $TEXT_BLOCK_ANSWER = 2;
+    public static $NUMBER_ANSWER = 3;
+    public static $SINGLE_CHOICE = 4;
+    public static $MULTIPLE_CHOICE = 5;
+    public static $LINEAR_SCALE = 6;
+    public static $TRUE_FALSE = 7;
+    public static $DATE_FIELD = 8;
+    public static $TIME_FIELD = 9;
+
     /**
      * @inheritdoc
      */
@@ -31,10 +51,10 @@ class GroupType extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['id_input_type', 'name'], 'required'],
-            [['id_input_type'], 'integer'],
-            [['name', 'description'], 'string', 'max' => 255],
-            [['name'], 'unique']
+            [['input_type', 'name'], 'required'],
+            [['input_type'], 'unique'],
+            [['input_type', 'name', 'description'], 'string', 'max' => 255],
+            [['input_type', 'name'], 'unique']
         ];
     }
 
@@ -45,18 +65,10 @@ class GroupType extends \yii\db\ActiveRecord
     {
         return [
             'id' => Yii::t('app', 'ID'),
-            'id_input_type' => Yii::t('app', 'Id Input Type'),
+            'input_type' => Yii::t('app', 'Input Type'),
             'name' => Yii::t('app', 'Name'),
             'description' => Yii::t('app', 'Description'),
         ];
-    }
-
-    /**
-     * @return \yii\db\ActiveQuery
-     */
-    public function getIdInputType()
-    {
-        return $this->hasOne(InputType::className(), ['id' => 'id_input_type']);
     }
 
     /**
@@ -80,7 +92,11 @@ class GroupType extends \yii\db\ActiveRecord
             7 => Yii::t('app','True or False'),
             8 => Yii::t('app','Date Field'),
             9 => Yii::t('app','Time Field'),
-            10 => Yii::t('app','Dropdown Menu'),
         ];
+    }
+
+    public static function getTypeString($id)
+    {
+        return self::getAllTypes()[$id];
     }
 }

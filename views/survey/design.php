@@ -36,9 +36,19 @@ $this->title = Yii::t('app','{title} | Survey Design', ['title'=>$survey->title]
                 <tr>
                     <td width="50%"><?= $model->getAttributeLabel('color') ?></td>
                     <td>
-                        <div class="input-group colorpicker">
-                            <?= Html::input('text', 'SurveyDesign[color]', $model->color, ['class'=>'form-control']) ?>
-                            <span class="input-group-addon"><i></i></span>
+                        <div class="row">
+                            <?= $form->field($model, 'color')->radioList(SurveyDesign::getAllColors(), [
+                                'item' => function($index, $label, $name, $checked, $value) {
+
+                                    $checkedAttr = ($checked) ? 'checked' : '';
+                                    $return = '<label class="col-sm-1 col-md-2 text-center">';
+                                    $return .= '<input type="radio" class="hide" name="' . $name . '" value="' . $value . '" '. $checkedAttr .'>';
+                                    $return .= '<div class="circle" style="background:'. $label .'"></div>';
+                                    $return .= '</label>';
+
+                                    return $return;
+                                }
+                            ])->label(false) ?>
                         </div>
                     </td>
                 </tr>

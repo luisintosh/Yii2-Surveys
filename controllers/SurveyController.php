@@ -2,6 +2,7 @@
 
 namespace app\controllers;
 
+use app\models\InterviewAnswer;
 use app\models\QuestionExtraitem;
 use Yii;
 use app\models\Survey;
@@ -10,6 +11,7 @@ use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
 use yii\filters\AccessControl;
+use yii\data\Pagination;
 
 use app\models\SurveyContacts;
 use app\models\SurveyDesign;
@@ -17,6 +19,7 @@ use app\models\SurveyPreferences;
 use app\models\SurveySection;
 use app\models\Question;
 use app\models\QuestionOption;
+use app\models\Interview;
 
 class SurveyController extends \yii\web\Controller
 {
@@ -63,7 +66,6 @@ class SurveyController extends \yii\web\Controller
 
         if ($model->load($post) && $model->save()) {
 
-
             if ( $model->doPreferencesNDesign() ) {
                 return $this->redirect(['survey/maker', 'id' => $model->getId()]);
             }
@@ -98,15 +100,18 @@ class SurveyController extends \yii\web\Controller
           if (Yii::$app->request->isPjax && isset($post['action'])) {
 
               // apply action to model
-              $res = Survey::applyAction($post['action']);
+              $resp = Survey::applyAction($post['action']);
 
-              if ($post['action']['type'] === 'publish-survey' && $res) {
+              if ($post['action']['type'] === 'publish-survey' && $resp) {
+                  Yii::$app->getSession()->setFlash('success', Yii::t('app', 'Published!'));
                   return $this->redirect(['distribute', 'id' => $model->getId()]);
               }
               else if ($post['action']['type'] === 'delete-survey') {
+                  Yii::$app->getSession()->setFlash('success', Yii::t('app', 'Deleted!'));
                   return $this->redirect(['index']);
               }
               else {
+                  if ($resp) Yii::$app->getSession()->setFlash('success', Yii::t('app', 'Saved!'));
                   return $this->render('maker_form', [
                       'model' => $model,
                   ]);
@@ -173,9 +178,43 @@ class SurveyController extends \yii\web\Controller
         return $this->render('results');
     }
 
-    public function actionView($id)
+    public function actionView($id, $u=null, $email=null)
     {
-        return $this->render('view');
+        $survey = $this->findModel($id);
+        $interview = Interview::find()->where(['unique'=>$u])->one();
+        $post = Yii::$app->request->post();
+        $surveySent = false;
+        $preferences = $survey->getSurveyPreferences()->one();
+        $today = Yii::$app->formatter->asTimestamp(time());
+
+        if ( !($today >= $preferences->start_at) || (!empty($preferences->end_at && !($today <= $preferences->end_at))) ) {
+            throw new NotFoundHttpException(Yii::t('app','The requested page does not exist.'));
+        }
+
+        if ($interview == null) {
+            $interview = Interview::createInterview($survey->id, $email);
+            if ($interview->save()) {
+                $interview->unique = md5($interview->id . $interview->id_survey);
+                $interview->save();
+                $this->redirect(['view', 'id'=>$id, 'u'=>$interview->unique]);
+            }
+        }
+
+        if (Yii::$app->request->isPost && $interview->load($post, $interview->formName())) {
+            $resp = Survey::saveMultipleData(InterviewAnswer::className(), $post, true);
+
+            if ($resp[0]) {
+                Yii::$app->getSession()->setFlash('success', Yii::t('app', 'Sent!'));
+                $surveySent = true;
+            }
+        }
+
+        return $this->renderPartial('view', [
+            'survey' => $survey,
+            'interview' => $interview,
+            'surveySent' => $surveySent,
+        ]);
+
     }
 
     public function actionPrint($id)

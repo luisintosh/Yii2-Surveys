@@ -66,4 +66,13 @@ class SurveySection extends \yii\db\ActiveRecord
     {
         return $this->hasMany(Question::className(), ['id_survey_section' => 'id']);
     }
+
+    public static function create($surveyID)
+    {
+        $section = new SurveySection();
+        $section->id_survey = $surveyID;
+        $section->save();
+
+        return $section;
+    }
 }

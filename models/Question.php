@@ -3,6 +3,7 @@
 namespace app\models;
 
 use Yii;
+use yii\db\Query;
 
 /**
  * This is the model class for table "question".
@@ -86,5 +87,27 @@ class Question extends \yii\db\ActiveRecord
     public function getQuestionOptions()
     {
         return $this->hasMany(QuestionOption::className(), ['id_question' => 'id']);
+    }
+
+    public static function create($sectionID, $groupType, $title)
+    {
+        $question = new Question();
+        $question->id_survey_section = $sectionID;
+        $question->id_group_type = $groupType;
+        $question->title = $title;
+        $question->save();
+
+        return $question;
+    }
+
+    public static function getAllQuestions($userId)
+    {
+        $totalQuestions = (new Query())->select('')->from('survey s')
+            ->andFilterWhere(['id_user'=>$userId])
+            ->innerJoin('survey_section sc', 'sc.id_survey = s.id')
+            ->innerJoin('question q', 'q.id_survey_section = sc.id')
+            ->select('q.*')->count();
+
+        return $totalQuestions;
     }
 }

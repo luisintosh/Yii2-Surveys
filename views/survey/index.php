@@ -4,37 +4,23 @@ use yii\helpers\Html;
 use yii\grid\GridView;
 use yii\widgets\Pjax;
 use yii\db\Query;
+use app\models\Interview;
+use app\models\Question;
 
 /* @var $this yii\web\View */
 
 $this->title = Yii::t('app','Surveys');
 // store user id only it's not an admin
-$idIfUser = (Yii::$app->user->can('admin')) ? '' : Yii::$app->user->id;
-
-// init query
-$query = (new Query())->select('')->from('survey s')
-    ->andFilterWhere(['id_user'=>$idIfUser])
-    ->innerJoin('survey_section sc', 'sc.id_survey = s.id')
-    ->innerJoin('question q', 'q.id_survey_section = sc.id');
+$userId = (Yii::$app->user->can('admin')) ? '' : Yii::$app->user->id;
 
 // Total Questions
-$totalQuestions = $query;
-$totalQuestions = $totalQuestions->select('q.*')->count();
+$totalQuestions = Question::getAllQuestions($userId);
 
 // Total Responses
-$query = $query
-    ->innerJoin('question_option qo', 'qo.id_question = q.id')
-    ->innerJoin('answer a', 'a.id_question_option = qo.id');
-
-$totalResponses = $query;
-$totalResponses = $totalResponses->select('a.*')->count();
+$totalResponses = Interview::getAllResponses($userId);
 
 // Total Responses this Week
-$totalResponsesWeek = $query;
-$totalResponsesWeek = $totalResponsesWeek->select('a.*')
-    ->where(['between', 'a.created_at', date('Y-m-d H:i:s', time()-(7 * 24 * 60 * 60)), date('Y-m-d H:i:s')])
-    ->count();
-
+$totalResponsesWeek = Interview::getAllResponsesThisWeek($userId);
 ?>
 <div class="content-header">
   <h1><?= Html::encode($this->title) ?></h1>
@@ -157,7 +143,7 @@ $totalResponsesWeek = $totalResponsesWeek->select('a.*')
                             ],
                             'template' => '<div class="btn-group" role="group">{view} {results} {maker} {distribute} {delete}</div>',
                         ],
-                        ['class' => 'yii\grid\CheckboxColumn'],
+                        //['class' => 'yii\grid\CheckboxColumn'],
                     ],
                 ]); ?>
             </div>

@@ -25,15 +25,10 @@ $config = [
             'errorAction' => 'site/error',
         ],
         'mailer' => [
-            /*'class' => 'yii\swiftmailer\Mailer',
-            'transport' => [
-                'class' => 'Swift_SmtpTransport',
-                'host' => 'localhost',
-                'username' => 'username',
-                'password' => 'password',
-                'port' => '587',
-                'encryption' => 'tls',
-            ],*/
+            'class' => 'yii\swiftmailer\Mailer',
+            'viewPath' => '@app/mail/layouts/html',
+            'useFileTransport' => false,
+            'transport' => require(__DIR__ . '/mailer.php'),
         ],
         'log' => [
             'traceLevel' => YII_DEBUG ? 3 : 0,

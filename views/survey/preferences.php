@@ -75,10 +75,6 @@ $this->title = Yii::t('app','{title} | Survey Preferences', ['title'=>$survey->t
                     <td><?= $form->field($model, 'randomize_questions')->checkbox(['label'=>false,'class'=>'js-switch'])->label(false) ?></td>
                 </tr>
                 <tr>
-                    <td><?= $model->getAttributeLabel('show_progress') ?></td>
-                    <td><?= $form->field($model, 'show_progress')->checkbox(['label'=>false,'class'=>'js-switch'])->label(false) ?></td>
-                </tr>
-                <tr>
                     <td><?= $model->getAttributeLabel('send_response_notif') ?></td>
                     <td><?= $form->field($model, 'send_response_notif')->checkbox(['label'=>false,'class'=>'js-switch'])->label(false) ?></td>
                 </tr>
@@ -110,7 +106,12 @@ $this->title = Yii::t('app','{title} | Survey Preferences', ['title'=>$survey->t
                 <?= $model->getAttributeLabel('end_text') ?>
             </p>
             <div class="wysihtml5-editor">
-                <?= $form->field($model, 'end_text')->textarea()->label(false) ?>
+                <?php
+                if (empty($model->end_text)) {
+                    $model->end_text = '<h2>'.Yii::t('app','Thank you for completing this survey!').'</h2>';
+                }
+                echo $form->field($model, 'end_text')->textarea()->label(false);
+                ?>
             </div>
         </div>
         <div class="col-md-12">

@@ -11,11 +11,13 @@ use Yii;
  * @property integer $id_question
  * @property string $title
  *
- * @property Answer[] $answers
+ * @property Interview[] $interviews
  * @property Question $idQuestion
  */
 class QuestionOption extends \yii\db\ActiveRecord
 {
+
+    public static $other_option_id = 'other-lka0KAOdjLKlkytytNMA30';
     /**
      * @inheritdoc
      */
@@ -51,9 +53,9 @@ class QuestionOption extends \yii\db\ActiveRecord
     /**
      * @return \yii\db\ActiveQuery
      */
-    public function getAnswers()
+    public function getInterviews()
     {
-        return $this->hasMany(Answer::className(), ['id_question_option' => 'id']);
+        return $this->hasMany(Interview::className(), ['id_question_option' => 'id']);
     }
 
     /**
@@ -62,5 +64,14 @@ class QuestionOption extends \yii\db\ActiveRecord
     public function getIdQuestion()
     {
         return $this->hasOne(Question::className(), ['id' => 'id_question']);
+    }
+
+    public static function create($questionID, $title)
+    {
+        $questionOption = new QuestionOption();
+        $questionOption->id_question = $questionID;
+        $questionOption->title = $title;
+        $questionOption->save();
+        return $questionOption;
     }
 }

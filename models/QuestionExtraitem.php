@@ -61,4 +61,13 @@ class QuestionExtraitem extends \yii\db\ActiveRecord
     {
         return $this->hasOne(Question::className(), ['id' => 'id_question']);
     }
+
+    public static function create($questionID)
+    {
+        $questionExtraitem = new QuestionExtraitem();
+        $questionExtraitem->id_question = $questionID;
+        $questionExtraitem->save();
+
+        return $questionExtraitem;
+    }
 }

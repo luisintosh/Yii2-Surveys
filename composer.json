@@ -23,6 +23,7 @@
     "bower-asset/raphael": "*",
     "bower-asset/switchery": "*",
     "bower-asset/toastr": "*",
+    "bower-asset/eonasdan-bootstrap-datetimepicker": "*",
     "amnah/yii2-user": "^5.0",
     "yii2mod/yii2-timezone": "*"
   },

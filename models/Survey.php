@@ -18,9 +18,8 @@ use yii\behaviors\TimestampBehavior;
  * @property string $created_at
  * @property string $updated_at
  *
- * @property AnswerDetail[] $answerDetails
+ * @property Interview[] $interviews
  * @property User $idUser
- * @property SurveyComment[] $surveyComments
  * @property SurveyContacts[] $surveyContacts
  * @property SurveyDesign[] $surveyDesigns
  * @property SurveyPreferences[] $surveyPreferences
@@ -80,9 +79,9 @@ class Survey extends \yii\db\ActiveRecord
     /**
      * @return \yii\db\ActiveQuery
      */
-    public function getAnswerDetails()
+    public function getInterviews()
     {
-        return $this->hasMany(AnswerDetail::className(), ['id_survey' => 'id']);
+        return $this->hasMany(Interview::className(), ['id_survey' => 'id']);
     }
 
     /**
@@ -91,14 +90,6 @@ class Survey extends \yii\db\ActiveRecord
     public function getIdUser()
     {
         return $this->hasOne(User::className(), ['id' => 'id_user']);
-    }
-
-    /**
-     * @return \yii\db\ActiveQuery
-     */
-    public function getSurveyComments()
-    {
-        return $this->hasMany(SurveyComment::className(), ['id_survey' => 'id']);
     }
 
     /**
@@ -152,12 +143,13 @@ class Survey extends \yii\db\ActiveRecord
      * @param $post = Yii::$app->request->post()
      * @return bool
      */
-    public static function saveMultipleData($modelClass, $post) {
+    public static function saveMultipleData($modelClass, $post, $createNew=false) {
         $m    = new $modelClass; // new Model()
         $formName = $m->formName(); // String: Model
         $post     = $post[$formName];
         // $models   = []; // array of models
         $success  = true; // saved or no
+        $errorMsg = false;
 
         if ($post && is_array($post)) {
             foreach ($post as $i => $item) { // $post: [[id=>...],[id=>...],[id=>...]]
@@ -165,6 +157,12 @@ class Survey extends \yii\db\ActiveRecord
                     $model = $m::findOne($item['id']);
                     $success = $model->load($item, '');
                     $success = $success && $model->save();
+                    $errorMsg = $model->errors;
+                } else if ($createNew) {
+                    $model = new $modelClass;
+                    $success = $model->load($item, '');
+                    $success = $success && $model->save();
+                    $errorMsg = $model->errors;
                 }
             }
         }
@@ -172,14 +170,13 @@ class Survey extends \yii\db\ActiveRecord
             $success = false;
         }
 
-        return $success;
+        return [$success, $errorMsg];
     }
 
     public static function applyAction(array $action = [])
     {
         $success = false;
-        if ($action && is_array($action) && isset($action['type']) && isset($action['section']) && isset($action['question']) && isset($action['option'])) {
-
+        if ($action && is_array($action) && isset($action['survey']) && isset($action['type']) && isset($action['section'])) {
             if ($action['type'] === 'delete-section' ) {
                 $success = SurveySection::findOne($action['section'])->delete();
 
@@ -188,23 +185,36 @@ class Survey extends \yii\db\ActiveRecord
                 $m->id_survey = $action['survey'];
                 $success = $m->save();
 
-            } else if ($action['type'] === 'delete-question') {
+            } else if ($action['type'] === 'delete-question' && isset($action['question'])) {
                 Question::findOne($action['question'])->delete();
 
-            } else if ($action['type'] === 'new-question') {
+            } else if (($action['type'] === 'new-question') && isset($action['questiontype'])) {
                 $m = new Question();
                 $m->id_survey_section = $action['section'];
-                $m->id_group_type = 1;
-                $m->title = 'New Question...';
+                $m->id_group_type = ($action['questiontype']);
+                $m->title = Yii::t('app','New question');
                 $success = $m->save();
 
-            } else if ($action['type'] === 'delete-option') {
+                if ($m->id_group_type == GroupType::$LINEAR_SCALE) {
+                    QuestionOption::create($m->id, '0%');
+                    QuestionOption::create($m->id, '50%');
+                    QuestionOption::create($m->id, '100%');
+                }
+                else if ($m->id_group_type == GroupType::$TRUE_FALSE) {
+                    QuestionOption::create($m->id, Yii::t('app','True'));
+                    QuestionOption::create($m->id, Yii::t('app','False'));
+                }
+                else {
+                    QuestionOption::create($m->id, Yii::t('app','Answer'));
+                }
+
+            } else if ($action['type'] === 'delete-option' && isset($action['option'])) {
                 $success = QuestionOption::findOne($action['option'])->delete();
 
             } else if ($action['type'] === 'new-option') {
                 $m = new QuestionOption();
                 $m->id_question = $action['question'];
-                $m->title = 'Answer...';
+                $m->title = Yii::t('app','Answer');
                 $success = $m->save();
 
             } else if ($action['type'] === 'delete-survey') {
