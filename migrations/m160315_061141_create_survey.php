@@ -26,7 +26,7 @@ class m160315_061141_create_survey extends Migration
         $this->createTable('survey_design', [
             'id' => $this->primaryKey(),
             'id_survey' => $this->integer()->notNull(),
-            'color' => $this->string(),
+            'color' => $this->string()->defaultValue('#525252'),
             'font_text' => $this->string(),
             'background_img' => $this->string(),
         ], $tableOptions);
@@ -41,7 +41,6 @@ class m160315_061141_create_survey extends Migration
             'allow_multi_submissions' => $this->boolean()->defaultValue(true),
             'show_question_number' => $this->boolean()->defaultValue(true),
             'randomize_questions' => $this->boolean()->defaultValue(false),
-            'show_progress' => $this->boolean()->defaultValue(true),
             'send_response_notif' => $this->boolean()->defaultValue(false),
             'show_share_btns' => $this->boolean()->defaultValue(true),
             'password_protect' => $this->boolean()->defaultValue(false),
