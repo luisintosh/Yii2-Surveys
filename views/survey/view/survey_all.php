@@ -258,7 +258,11 @@ $preferences = $survey->getSurveyPreferences()->one();
                                                                     echo $form->field($answer, "[{$optionN}]".'id_question')->hiddenInput()->label(false);
                                                                     echo $form->field($answer, "[{$optionN}]".'number')->hiddenInput()->label(false);
                                                                     echo $form->field($question, "[{$optionN}]".'optional')->hiddenInput(['class'=>'optional-value'])->label(false);
-                                                                    echo $form->field($answer, "[{$optionN}]".'a_text')->checkbox([], false)->label($qOption->title);
+                                                                    
+                                                                    echo $form->field($answer, "[{$optionN}]".'a_text')->checkbox([
+                                                                        'uncheck'=>'*/',
+                                                                        'value'=>$qOption->title
+                                                                        ], false)->label($qOption->title);
                                                                     ?>
                                                                 </div>
                                                                 <?php

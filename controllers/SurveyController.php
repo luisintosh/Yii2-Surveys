@@ -173,11 +173,6 @@ class SurveyController extends \yii\web\Controller
         ]);
     }
 
-    public function actionResults()
-    {
-        return $this->render('results');
-    }
-
     public function actionView($id, $u=null, $email=null)
     {
         $survey = $this->findModel($id);
@@ -215,6 +210,16 @@ class SurveyController extends \yii\web\Controller
             'surveySent' => $surveySent,
         ]);
 
+    }
+
+    public function actionResults($id)
+    {
+        $survey = $this->findModel($id);
+        $post = Yii::$app->request->post();
+
+        return $this->render('results', [
+            'survey' => $survey,
+        ]);
     }
 
     public function actionPrint($id)

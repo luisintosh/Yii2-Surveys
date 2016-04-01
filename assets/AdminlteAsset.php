@@ -34,6 +34,7 @@ class AdminlteAsset extends AssetBundle
         'admin-lte/plugins/jQueryUI/jquery-ui.min.js',
         'raphael/raphael-min.js',
         'admin-lte/plugins/morris/morris.min.js',
+        'admin-lte/plugins/chartjs/Chart.min.js',
         'admin-lte/plugins/sparkline/jquery.sparkline.min.js',
         'admin-lte/plugins/jvectormap/jquery-jvectormap-1.2.2.min.js',
         'admin-lte/plugins/jvectormap/jquery-jvectormap-world-mill-en.js',

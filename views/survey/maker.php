@@ -10,19 +10,14 @@ use yii\widgets\Menu;
 $this->title = Yii::t('app','{title} | Survey Maker', ['title'=>$model->title]);
 ?>
 <section class="content-header">
-    <h1><?= Html::encode($this->title) ?></h1>
+    <h1><?= Html::encode($model->title) ?></h1>
 </section>
 <div class="content">
 
     <?=
-    Menu::widget([
-      'options' => ['class'=>'nav nav-pills nav-justified'],
-      'items' => [
-        ['label'=>Yii::t('app','Maker'), 'url'=>['/survey/maker', 'id'=>$model->getId()]],
-        ['label'=>Yii::t('app','Preferences'), 'url'=>['/survey/preferences', 'id'=>$model->getId()]],
-        ['label'=>Yii::t('app','Design'), 'url'=>['/survey/design', 'id'=>$model->getId()]],
-      ],
-    ]);
+    $this->render('survey_maker_menu', [
+        'survey'=>$model,
+      ]);
     ?>
 
     <?= $this->render('maker_form', [

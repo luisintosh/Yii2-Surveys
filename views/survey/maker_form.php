@@ -28,7 +28,7 @@ $optionN = 0;
 
         <?php $form = ActiveForm::begin(['id' => 'datasurvey', 'options' => ['data-pjax' => true ]]); ?>
 
-        <h2 class="page-header"><?= Yii::t('app','Data') ?></h2>
+        <h2 class="page-header"><?= Yii::t('app','Form') ?></h2>
         <div class="row">
             <div class="col-md-8">
                 <div class="box box-solid box-primary">
@@ -83,7 +83,7 @@ $optionN = 0;
                             <button type="button" class="btn btn-box-tool" data-widget="collapse" data-toggle="tooltip" data-placement="top" title="<?= Yii::t('app','Minimize section') ?>">
                                 <i class="fa fa-minus"></i>
                             </button>
-                            <button type="button" class="btn btn-box-tool survey-action" data-action="delete-section" data-survey="<?= $model->id ?>" data-section="<?= $section->id ?>" data-toggle="tooltip" data-placement="top" title="<?= Yii::t('app','Delete section') ?>">
+                            <button type="button" class="btn btn-box-tool survey-action" data-widget="collapse" data-action="delete-section" data-survey="<?= $model->id ?>" data-section="<?= $section->id ?>" data-toggle="tooltip" data-placement="top" title="<?= Yii::t('app','Delete section') ?>">
                                 <i class="fa fa-times"></i>
                             </button>
                         </div>
@@ -190,7 +190,13 @@ $optionN = 0;
                                                     </div>
                                                     <div class="col-sm-6 text-right">
                                                         <!-- QUESTION PREFERENCES -->
-                                                        <?= $form->field($question, "[{$questionN}]".'optional')->checkbox() ?>
+                                                        <?php 
+                                                            if ($question->id_group_type == GroupType::$MULTIPLE_CHOICE) {
+                                                                $question->optional == 1;
+                                                            } else {
+                                                                echo $form->field($question, "[{$questionN}]".'optional')->checkbox();
+                                                            }
+                                                        ?>
 
                                                     </div>
                                                 </div>
