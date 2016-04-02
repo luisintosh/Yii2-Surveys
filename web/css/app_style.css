@@ -113,3 +113,7 @@ ul.question-options li:hover .trash-btn {
   width: 250px;
 }
 
+.list-answers {
+    height: 185px;
+    overflow-y: scroll;
+}

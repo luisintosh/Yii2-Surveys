@@ -8,6 +8,7 @@ use app\models\Question;
 use app\models\Interview;
 use app\models\InterviewAnswer;
 use app\models\GroupType;
+use kartik\export\ExportMenu;
 
 /* @var $this yii\web\View */
 $this->title = Yii::t('app','{title} | Survey Results', ['title'=>$survey->title]);
@@ -27,6 +28,53 @@ $optionN = 0;
         'survey'=>$survey,
     ]);
     ?>
+    <h2 class="page-header"><?= Yii::t('app','Export Results') ?></h2>
+    <div class="row">
+        <div class="col-lg-12">
+            <?php 
+            // Renders a export dropdown menu
+            echo ExportMenu::widget([
+                'dataProvider' => $dataProvider,
+                'columns' => [
+                    ['class' => 'yii\grid\SerialColumn'],
+                    ['attribute'=>'unique', 'label'=>'ID'],
+                    ['attribute'=>'email', 'label'=>Yii::t('app','Email')],
+                    ['attribute'=>'ip_address', 'label'=>Yii::t('app','IP')],
+                    ['attribute'=>'country', 'label'=>Yii::t('app','Country')],
+                    ['attribute'=>'web_browser', 'label'=>Yii::t('app','Browser')],
+                    ['attribute'=>'survey_title', 'label'=>Yii::t('app','Survey Title')],
+                    ['attribute'=>'section_title', 'label'=>Yii::t('app','Section Title')],
+                    ['attribute'=>'question_title', 'label'=>Yii::t('app','Question Title')],
+                    ['attribute'=>'answer', 'label'=>Yii::t('app','Answer')],
+                    [
+                        'attribute'=>'created_at',
+                        'label' => Yii::t('app','Created on'),
+                        'format' => ['date', 'php:Y-m-d H:i:s']
+                    ],
+                    [
+                        'attribute'=>'updated_at',
+                        'label' => Yii::t('app','Updated on'),
+                        'format' => ['date', 'php:Y-m-d H:i:s']
+                    ],
+                ]
+            ]);
+
+            // You can choose to render your own GridView separately
+            echo \kartik\grid\GridView::widget([
+                'dataProvider' => $dataProvider,
+                'filterModel' => $searchModel,
+                'columns' => [
+                    ['class' => 'yii\grid\SerialColumn'],
+                    ['attribute'=>'email', 'label'=>Yii::t('app','Email')],
+                    ['attribute'=>'survey_title', 'label'=>Yii::t('app','Survey Title')],
+                    ['attribute'=>'section_title', 'label'=>Yii::t('app','Section Title')],
+                    ['attribute'=>'question_title', 'label'=>Yii::t('app','Question Title')],
+                    ['attribute'=>'answer', 'label'=>Yii::t('app','Answer')],
+                ]
+            ]);
+            ?>
+        </div>
+    </div>
 
     <h2 class="page-header"><?= Yii::t('app','Survey Results') ?></h2>
     <?php
@@ -72,11 +120,6 @@ $optionN = 0;
             <?php endforeach ?>
         </div>
     <?php endforeach ?>
-
-    <br>
-    <div class="padding15 text-right">
-        <a href="javascript:window.print()" class="btn btn-primary"><?= Yii::t('app', 'Print') ?></a>
-    </div>
 </div>
 
 <?= $this->registerJsFile('@web/js/survey_results.js', ['depends' => [\yii\web\JqueryAsset::className()]]) ?>

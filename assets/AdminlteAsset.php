@@ -31,7 +31,6 @@ class AdminlteAsset extends AssetBundle
         'toastr/toastr.min.css',
     ];
     public $js = [
-        'admin-lte/plugins/jQueryUI/jquery-ui.min.js',
         'raphael/raphael-min.js',
         'admin-lte/plugins/morris/morris.min.js',
         'admin-lte/plugins/chartjs/Chart.min.js',

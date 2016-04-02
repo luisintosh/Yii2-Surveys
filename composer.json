@@ -25,7 +25,9 @@
     "bower-asset/toastr": "*",
     "bower-asset/eonasdan-bootstrap-datetimepicker": "*",
     "amnah/yii2-user": "^5.0",
-    "yii2mod/yii2-timezone": "*"
+    "yii2mod/yii2-timezone": "*",
+    "kartik-v/yii2-export": "@dev",
+    "kartik-v/yii2-mpdf": "@dev"
   },
   "require-dev": {
     "yiisoft/yii2-codeception": "*",

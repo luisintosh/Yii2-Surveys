@@ -7,6 +7,8 @@ use app\models\QuestionExtraitem;
 use Yii;
 use app\models\Survey;
 use app\models\SurveySearch;
+use app\models\Result;
+use app\models\ResultSearch;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
@@ -215,10 +217,14 @@ class SurveyController extends \yii\web\Controller
     public function actionResults($id)
     {
         $survey = $this->findModel($id);
-        $post = Yii::$app->request->post();
+
+        $searchModel = new ResultSearch();
+        $dataProvider = $searchModel->search(Yii::$app->request->queryParams, $survey->id);
 
         return $this->render('results', [
             'survey' => $survey,
+            'searchModel' => $searchModel,
+            'dataProvider' => $dataProvider,
         ]);
     }
 

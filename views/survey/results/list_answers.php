@@ -1,5 +1,6 @@
 <?php 
 
+use yii\helpers\Html;
 use app\models\Survey;
 use app\models\Question;
 use app\models\Interview;
@@ -27,14 +28,16 @@ foreach ($interviews as $interview) {
 	}
 }
 ?>
+<div class="list-answers">
+	<table class="table table-striped table-bordered">
+		<caption><?= Yii::t('app', 'This question have <b>{number}</b> answers.', ['number'=>count($answersList)]) ?></caption>
+		<tbody>
+			<?php foreach($answersList as $k => $a): ?>
+				<tr>
+					<td><?= $a ?></td>
+				</tr>
+			<?php endforeach ?>
+		</tbody>
+	</table>
+</div>
 
-<table class="table table-striped table-bordered">
-	<caption><?= Yii::t('app', 'This question have <b>{number}</b> answers.', ['number'=>count($answersList)]) ?></caption>
-	<tbody>
-		<?php foreach($answersList as $a): ?>
-		<tr>
-			<td><?= $a ?></td>
-		</tr>
-		<?php endforeach ?>
-	</tbody>
-</table>
