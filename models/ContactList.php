@@ -45,8 +45,8 @@ class ContactList extends \yii\db\ActiveRecord
         return [
             'id' => Yii::t('app', 'ID'),
             'title' => Yii::t('app', 'Title'),
-            'created_at' => Yii::t('app', 'Created At'),
-            'updated_at' => Yii::t('app', 'Updated At'),
+            'created_at' => Yii::t('app', 'Created On'),
+            'updated_at' => Yii::t('app', 'Updated On'),
         ];
     }
 

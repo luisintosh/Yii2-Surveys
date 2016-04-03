@@ -74,7 +74,7 @@ $this->title = Yii::t('app','Distribute "{survey_title}"',['survey_title'=>$mode
                         <?= Yii::t('app','Invite respondents to your survey + track their identity and how they answered.') ?>
                     </p>
                     <p>
-                        <?= Html::a(Yii::t('app','Send Invitations'), ['contacts/send-invitations','survey_id'=>$model->getId()], ['class'=>'btn btn-warning btn-block']) ?>
+                        <?= Html::a(Yii::t('app','Send Invitations'), ['contacts/send-invitations','surveyID'=>$model->getId()], ['class'=>'btn btn-warning btn-block']) ?>
                     </p>
                     <p class="text-center">
                         <?= Html::img('@web/img/survey_maker/email_service.png', ['height'=>'110px']) ?>

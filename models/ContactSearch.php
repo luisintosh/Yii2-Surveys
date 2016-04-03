@@ -5,12 +5,12 @@ namespace app\models;
 use Yii;
 use yii\base\Model;
 use yii\data\ActiveDataProvider;
-use app\models\ContactList;
+use app\models\Contact;
 
 /**
- * ContactListSearch represents the model behind the search form about `app\models\ContactList`.
+ * ContactSearch represents the model behind the search form about `app\models\Contact`.
  */
-class ContactListSearch extends ContactList
+class ContactSearch extends Contact
 {
     /**
      * @inheritdoc
@@ -18,8 +18,8 @@ class ContactListSearch extends ContactList
     public function rules()
     {
         return [
-            [['id', 'created_at', 'updated_at'], 'integer'],
-            [['title'], 'safe'],
+            [['id', 'id_contact_list'], 'integer'],
+            [['contact_name', 'contact_email'], 'safe'],
         ];
     }
 
@@ -41,7 +41,7 @@ class ContactListSearch extends ContactList
      */
     public function search($params)
     {
-        $query = ContactList::find();
+        $query = Contact::find();
 
         // add conditions that should always apply here
 
@@ -60,11 +60,11 @@ class ContactListSearch extends ContactList
         // grid filtering conditions
         $query->andFilterWhere([
             'id' => $this->id,
-            'created_at' => $this->created_at,
-            'updated_at' => $this->updated_at,
+            'id_contact_list' => $this->id_contact_list,
         ]);
 
-        $query->andFilterWhere(['like', 'title', $this->title]);
+        $query->andFilterWhere(['like', 'contact_name', $this->contact_name])
+            ->andFilterWhere(['like', 'contact_email', $this->contact_email]);
 
         return $dataProvider;
     }

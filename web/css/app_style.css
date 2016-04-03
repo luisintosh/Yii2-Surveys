@@ -108,7 +108,7 @@ ul.question-options li:hover .trash-btn {
     border-radius: 5px !important;
 }
 
-/* opciones del sis */
+/* options */
 .config-option {
   width: 250px;
 }
@@ -116,4 +116,10 @@ ul.question-options li:hover .trash-btn {
 .list-answers {
     height: 185px;
     overflow-y: scroll;
+}
+
+.bottom-align-text {
+    position: absolute;
+    bottom: 0;
+    right: 0;
 }

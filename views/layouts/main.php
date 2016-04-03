@@ -211,7 +211,7 @@ Yii::$app->set('mailer', [
   m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
   })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
 
-  ga('create', <?= Yii::$app->settings->get('google_analytics_id') ?>, 'auto');
+  ga('create', '<?= Yii::$app->settings->get('google_analytics_id') ?>', 'auto');
   ga('send', 'pageview');
 </script>
 </body>

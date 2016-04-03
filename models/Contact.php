@@ -32,7 +32,8 @@ class Contact extends \yii\db\ActiveRecord
         return [
             [['id_contact_list', 'contact_email'], 'required'],
             [['id_contact_list'], 'integer'],
-            [['contact_name', 'contact_email'], 'string', 'max' => 255]
+            [['contact_name', 'contact_email'], 'string', 'max' => 255],
+            [['contact_email'], 'email']
         ];
     }
 
