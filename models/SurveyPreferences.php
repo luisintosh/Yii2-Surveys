@@ -17,7 +17,6 @@ use yii\behaviors\TimestampBehavior;
  * @property integer $allow_multi_submissions
  * @property integer $show_question_number
  * @property integer $randomize_questions
- * @property integer $show_progress
  * @property integer $send_response_notif
  * @property integer $show_share_btns
  * @property integer $password_protect
@@ -42,7 +41,7 @@ class SurveyPreferences extends \yii\db\ActiveRecord
     {
         return [
             [['id_survey', 'start_at'], 'required'],
-            [['id_survey', 'sections_per_page', 'questions_per_page', 'allow_multi_submissions', 'show_question_number', 'randomize_questions', 'show_progress', 'send_response_notif', 'show_share_btns', 'password_protect'], 'integer'],
+            [['id_survey', 'sections_per_page', 'questions_per_page', 'allow_multi_submissions', 'show_question_number', 'randomize_questions', 'send_response_notif', 'show_share_btns', 'password_protect'], 'integer'],
             [['start_at', 'end_at'], 'safe'],
             [['end_text'], 'string'],
             [['password_string', 'end_redirect'], 'string', 'max' => 255],
@@ -66,7 +65,6 @@ class SurveyPreferences extends \yii\db\ActiveRecord
             'allow_multi_submissions' => Yii::t('app', 'Allow multiple submissions?'),
             'show_question_number' => Yii::t('app', 'Display question numbers?'),
             'randomize_questions' => Yii::t('app', 'Randomize questions order?'),
-            'show_progress' => Yii::t('app', 'Show progress bar?'),
             'send_response_notif' => Yii::t('app', 'Receive response notifications by e-mail?'),
             'show_share_btns' => Yii::t('app', 'Show social networks sharing plugin?'),
             'password_protect' => Yii::t('app', 'Password protection?'),

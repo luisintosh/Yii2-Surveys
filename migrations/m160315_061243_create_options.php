@@ -18,7 +18,6 @@ class m160315_061243_create_options extends Migration
         ], $tableOptions);
 
         $this->batchInsert('app_options', ['option_name', 'option_value'], [
-            ['home_url', ''],
             ['app_name', 'website name'],
             ['app_description', 'website description'],
             ['logo_url', ''],
@@ -30,6 +29,7 @@ class m160315_061243_create_options extends Migration
             ['mailserver_port', ''],
             ['social_facebook_page', ''],
             ['social_twitter_user', ''],
+            ['google_analytics_id', ''],
         ]);
     }
 

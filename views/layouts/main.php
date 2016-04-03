@@ -149,18 +149,13 @@ Yii::$app->setTimeZone(Yii::$app->timezone->name);
                                 'visible' => Yii::$app->user->can("admin"),
                                 'items' => [
                                   [
-                                      'label' => Yii::t('app','Analytics'),
-                                      'url' => ['/config/analytics'],
-                                      'template' => '<a href="{url}"><i class="fa fa-bar-chart"></i> {label}</a>',
-                                  ],
-                                  [
                                       'label' => Yii::t('app','Users'),
                                       'url' => ['/user/admin'],
                                       'template' => '<a href="{url}"><i class="fa fa-users"></i> {label}</a>',
                                   ],
                                   [
                                       'label' => Yii::t('app','Preferences'),
-                                      'url' => ['/config/index'],
+                                      'url' => ['/options/index'],
                                       'template' => '<a href="{url}"><i class="fa fa-cog"></i> {label}</a>',
                                   ],
                                 ],
@@ -195,7 +190,30 @@ Yii::$app->setTimeZone(Yii::$app->timezone->name);
 
 <?= $this->render('alerts') ?>
 
+<?php
+Yii::$app->set('mailer', [
+    'class' => 'yii\swiftmailer\Mailer',
+    'transport' => [
+        'class' => 'Swift_SmtpTransport',
+        'host' => Yii::$app->settings->get('mailserver_url'), 
+        'username' => Yii::$app->settings->get('mailserver_login'),
+        'password' => Yii::$app->settings->get('mailserver_pass'),
+        'port' => Yii::$app->settings->get('mailserver_port'),
+        'encryption' => 'tls',
+    ],
+]);
+?>
+
 <?php $this->endBody() ?>
+<script>
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+  ga('create', <?= Yii::$app->settings->get('google_analytics_id') ?>, 'auto');
+  ga('send', 'pageview');
+</script>
 </body>
 </html>
 <?php $this->endPage() ?>

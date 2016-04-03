@@ -23,17 +23,7 @@ $this->title = Yii::t('app','General Settings');
                     <table class="table table-bordered table-striped">
                         <tbody>
                         <tr>
-                            <th class="text-right config-option"><?= Yii::t('app','Start page') ?></th>
-                            <th>
-                                <div class="hide">
-                                    <?= $form->field($models[0], '[0]id')->hiddenInput() ?>
-                                    <?= $form->field($models[0], '[0]option_name')->hiddenInput() ?>
-                                </div>
-                                <?= $form->field($models[0], '[0]option_value')->textInput(['maxlength' => true])->label(false) ?>
-                            </th>
-                        </tr>
-                        <tr>
-                            <th class="text-right"><?= Yii::t('app','Site title') ?></th>
+                            <th class="text-right config-option"><?= Yii::t('app','Site title') ?></th>
                             <th>
                                 <div class="hide">
                                     <?= $form->field($models[1], '[1]id')->hiddenInput() ?>
@@ -72,16 +62,6 @@ $this->title = Yii::t('app','General Settings');
                                 <?= $form->field($models[4], '[4]option_value')->radioList(['1'=>Yii::t('app','Yes'), '0'=>Yii::t('app','No')])->label(false) ?>
                             </th>
                         </tr>
-                        <tr>
-                            <th class="text-right"><?= Yii::t('app','Support email') ?></th>
-                            <th>
-                                <div class="hide">
-                                    <?= $form->field($models[5], '[5]id')->hiddenInput() ?>
-                                    <?= $form->field($models[5], '[5]option_name')->hiddenInput() ?>
-                                </div>
-                                <?= $form->field($models[5], '[5]option_value')->textInput(['maxlength' => true])->label(false) ?>
-                            </th>
-                        </tr>
                         </tbody>
                     </table>
                 </div>
@@ -95,6 +75,16 @@ $this->title = Yii::t('app','General Settings');
                 <div class="box-body">
                     <table class="table table-bordered table-striped">
                         <tbody>
+                        <tr>
+                            <th class="text-right"><?= Yii::t('app','Support email') ?></th>
+                            <th>
+                                <div class="hide">
+                                    <?= $form->field($models[5], '[5]id')->hiddenInput() ?>
+                                    <?= $form->field($models[5], '[5]option_name')->hiddenInput() ?>
+                                </div>
+                                <?= $form->field($models[5], '[5]option_value')->textInput(['maxlength' => true])->label(false) ?>
+                            </th>
+                        </tr>
                         <tr>
                             <th class="text-right config-option">Host SMTP</th>
                             <th>
@@ -132,7 +122,7 @@ $this->title = Yii::t('app','General Settings');
                                     <?= $form->field($models[9], '[9]id')->hiddenInput() ?>
                                     <?= $form->field($models[9], '[9]option_name')->hiddenInput() ?>
                                 </div>
-                                <?= $form->field($models[9], '[9]option_value')->textInput(['maxlength' => true])->label(false) ?>
+                                <?= $form->field($models[9], '[9]option_value')->textInput(['maxlength' => true, 'placeholder'=>'587'])->label(false) ?>
                             </th>
                         </tr>
                         </tbody>
@@ -155,17 +145,40 @@ $this->title = Yii::t('app','General Settings');
                                     <?= $form->field($models[10], '[10]id')->hiddenInput() ?>
                                     <?= $form->field($models[10], '[10]option_name')->hiddenInput() ?>
                                 </div>
-                                <?= $form->field($models[10], '[10]option_value')->textInput(['maxlength' => true])->label(false) ?>
+                                <?= $form->field($models[10], '[10]option_value')->textInput(['maxlength' => true, 'placeholder'=>'https://www.facebook.com/me'])->label(false) ?>
                             </th>
                         </tr>
                         <tr>
-                            <th class="text-right"><?= Yii::t('app','Twitter URL') ?></th>
+                            <th class="text-right"><?= Yii::t('app','Twitter User') ?></th>
                             <th>
                                 <div class="hide">
                                     <?= $form->field($models[11], '[11]id')->hiddenInput() ?>
                                     <?= $form->field($models[11], '[11]option_name')->hiddenInput() ?>
                                 </div>
-                                <?= $form->field($models[11], '[11]option_value')->textInput(['maxlength' => true])->label(false) ?>
+                                <?= $form->field($models[11], '[11]option_value')->textInput(['maxlength' => true, 'placeholder'=>'@me'])->label(false) ?>
+                            </th>
+                        </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-12">
+            <div class="box box-primary">
+                <div class="box-header with-border">
+                    <h3 class="box-title"><?= Yii::t('app','Analytics') ?></h3>
+                </div>
+                <div class="box-body">
+                    <table class="table table-bordered table-striped">
+                        <tbody>
+                        <tr>
+                            <th class="text-right config-option"><?= Yii::t('app','Google Analytics Tracking ID') ?></th>
+                            <th>
+                                <div class="hide">
+                                    <?= $form->field($models[11], '[10]id')->hiddenInput() ?>
+                                    <?= $form->field($models[11], '[10]option_name')->hiddenInput() ?>
+                                </div>
+                                <?= $form->field($models[11], '[10]option_value')->textInput(['maxlength' => true, 'placeholder'=>'UA-XXXXXXXX'])->label(false) ?>
                             </th>
                         </tr>
                         </tbody>
