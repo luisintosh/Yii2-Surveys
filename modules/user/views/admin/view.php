@@ -8,13 +8,12 @@ use yii\widgets\DetailView;
  * @var app\modules\user\models\User $user
  */
 
-$this->title = $user->id;
-$this->params['breadcrumbs'][] = ['label' => Yii::t('user', 'Users'), 'url' => ['index']];
-$this->params['breadcrumbs'][] = $this->title;
+$this->title = Yii::t('app', 'View User Data');
 ?>
-<div class="user-view">
-
+<section class="content-header">
     <h1><?= Html::encode($this->title) ?></h1>
+</section>
+<div class="content user-view">
 
     <p>
         <?= Html::a(Yii::t('user', 'Update'), ['update', 'id' => $user->id], ['class' => 'btn btn-primary']) ?>

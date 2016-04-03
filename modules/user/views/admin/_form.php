@@ -22,26 +22,41 @@ $role = $module->model("Role");
         'enableAjaxValidation' => true,
     ]); ?>
 
-    <?= $form->field($user, 'email')->textInput(['maxlength' => 255]) ?>
+    <div class="row">
+        <div class="col-md-6">
+            <?= $form->field($user, 'email')->textInput(['maxlength' => 255]) ?>
+        </div>
 
-    <?= $form->field($user, 'username')->textInput(['maxlength' => 255]) ?>
+        <div class="col-md-6">
+            <?= $form->field($user, 'username')->textInput(['maxlength' => 255]) ?>
+        </div>
 
-    <?= $form->field($user, 'newPassword')->passwordInput() ?>
+        <div class="col-md-6">
+            <?= $form->field($user, 'newPassword')->passwordInput() ?>
+        </div>
 
-    <?= $form->field($profile, 'full_name'); ?>
+        <div class="col-md-6">
+            <?= $form->field($profile, 'full_name'); ?>
+        </div>
 
-    <?= $form->field($user, 'role_id')->dropDownList($role::dropdown()); ?>
+        <div class="col-md-6">
+            <?= $form->field($user, 'role_id')->dropDownList($role::dropdown()); ?>
+        </div>
 
-    <?= $form->field($user, 'status')->dropDownList($user::statusDropdown()); ?>
+        <div class="col-md-6">
+            <?= $form->field($user, 'status')->dropDownList($user::statusDropdown()); ?>
+        </div>
 
-    <?php // use checkbox for banned_at ?>
-    <?php // convert `banned_at` to int so that the checkbox gets set properly ?>
-    <?php $user->banned_at = $user->banned_at ? 1 : 0 ?>
-    <?= Html::activeLabel($user, 'banned_at', ['label' => Yii::t('user', 'Banned')]); ?>
-    <?= Html::activeCheckbox($user, 'banned_at'); ?>
-    <?= Html::error($user, 'banned_at'); ?>
-
-    <?= $form->field($user, 'banned_reason'); ?>
+        <div class="col-md-6">
+            <?php $user->banned_at = $user->banned_at ? 1 : 0 ?>
+            <?= $form->field($user, 'banned_at')->radio([],false)->label(Yii::t('user', 'Banned')) ?>
+            <?= Html::error($user, 'banned_at'); ?>
+        </div>
+        
+        <div class="col-md-6">
+            <?= $form->field($user, 'banned_reason'); ?>
+        </div>
+    </div>
 
     <div class="form-group">
         <?= Html::submitButton($user->isNewRecord ? Yii::t('user', 'Create') : Yii::t('user', 'Update'), ['class' => $user->isNewRecord ? 'btn btn-success' : 'btn btn-primary']) ?>

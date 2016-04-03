@@ -10,7 +10,10 @@ use yii\helpers\Html;
 
 $this->title = Yii::t('user', $success ? 'Confirmed' : 'Error');
 ?>
-<div class="user-default-confirm">
+<section class="content-header">
+    <h1><?= Html::encode($this->title) ?></h1>
+</section>
+<div class="content user-default-confirm">
 
     <?php if ($success): ?>
 

@@ -12,11 +12,11 @@ use app\modules\user\helpers\Timezone;
  */
 
 $this->title = Yii::t('user', 'Profile');
-$this->params['breadcrumbs'][] = $this->title;
 ?>
-<div class="user-default-profile">
-
+<section class="content-header">
     <h1><?= Html::encode($this->title) ?></h1>
+</section>
+<div class="content user-default-profile">
 
     <?php if ($flash = Yii::$app->session->getFlash("Profile-success")): ?>
 

@@ -14,11 +14,11 @@ use yii\widgets\ActiveForm;
 $module = $this->context->module;
 
 $this->title = Yii::t('user', 'Account');
-$this->params['breadcrumbs'][] = $this->title;
 ?>
-<div class="user-default-account">
-
+<section class="content-header">
     <h1><?= Html::encode($this->title) ?></h1>
+</section>
+<div class="content user-default-account">
 
     <?php if ($flash = Yii::$app->session->getFlash("Account-success")): ?>
 

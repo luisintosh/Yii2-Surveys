@@ -10,14 +10,12 @@ use yii\helpers\Html;
 
 $this->title = Yii::t('user', 'Update {modelClass}: ', [
   'modelClass' => 'User',
-]) . ' ' . $user->id;
-$this->params['breadcrumbs'][] = ['label' => Yii::t('user', 'Users'), 'url' => ['index']];
-$this->params['breadcrumbs'][] = ['label' => $user->id, 'url' => ['view', 'id' => $user->id]];
-$this->params['breadcrumbs'][] = Yii::t('user', 'Update');
+]);
 ?>
-<div class="user-update">
-
+<section class="content-header">
     <h1><?= Html::encode($this->title) ?></h1>
+</section>
+<div class="content user-update">
 
     <?= $this->render('_form', [
         'user' => $user,

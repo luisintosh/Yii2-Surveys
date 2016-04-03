@@ -12,10 +12,10 @@ $module = $this->context->module;
 
 $this->title = Yii::t('user', 'Yii 2 User');
 ?>
-<div class="user-default-index">
-
-    <h1>Yii 2 User Module - <?= $module->getVersion(); ?></h1>
-    <h3>Actions in this module</h3>
+<section class="content-header">
+    <h1><?= Html::encode($this->title) ?></h1>
+</section>
+<div class="content user-default-index">
 
     <p>
         <em><strong>Note:</strong> Some actions may be unavailable depending on if you are logged in/out, or as an

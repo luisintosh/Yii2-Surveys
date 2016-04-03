@@ -10,11 +10,11 @@ use yii\widgets\ActiveForm;
  */
 
 $this->title = Yii::t('user', 'Resend');
-$this->params['breadcrumbs'][] = $this->title;
 ?>
-<div class="user-default-resend">
-
+<section class="content-header">
     <h1><?= Html::encode($this->title) ?></h1>
+</section>
+<div class="content user-default-resend">
 
     <?php if ($flash = Yii::$app->session->getFlash('Resend-success')): ?>
 

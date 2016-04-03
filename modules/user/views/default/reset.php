@@ -12,11 +12,11 @@ use yii\widgets\ActiveForm;
  */
 
 $this->title = Yii::t('user', 'Reset');
-$this->params['breadcrumbs'][] = $this->title;
 ?>
-<div class="user-default-reset">
-
+<section class="content-header">
     <h1><?= Html::encode($this->title) ?></h1>
+</section>
+<div class="content user-default-reset">
 
     <?php if (!empty($success)): ?>
 

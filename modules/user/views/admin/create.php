@@ -11,12 +11,11 @@ use yii\helpers\Html;
 $this->title = Yii::t('user', 'Create {modelClass}', [
   'modelClass' => 'User',
 ]);
-$this->params['breadcrumbs'][] = ['label' => Yii::t('user', 'Users'), 'url' => ['index']];
-$this->params['breadcrumbs'][] = $this->title;
 ?>
-<div class="user-create">
-
+<section class="content-header">
     <h1><?= Html::encode($this->title) ?></h1>
+</section>
+<div class="content user-create">
 
     <?= $this->render('_form', [
         'user' => $user,

@@ -71,10 +71,10 @@ Yii::$app->setTimeZone(Yii::$app->timezone->name);
                       <?php if (Yii::$app->user->isGuest): ?>
                       <!-- Guess -->
                       <li class="bg-aqua">
-                        <?= Html::a(Yii::t('app','Login'), ['user/login'], ['class'=>'']) ?>
+                        <?= Html::a(Yii::t('app','Login'), ['/user/login'], ['class'=>'']) ?>
                       </li>
                       <li class="bg-red">
-                        <?= Html::a(Yii::t('app','Register'), ['user/register'], ['class'=>'']) ?>
+                        <?= Html::a(Yii::t('app','Register'), ['/user/register'], ['class'=>'']) ?>
                       </li>
                       <?php else: ?>
                       <!-- User -->
@@ -96,10 +96,10 @@ Yii::$app->setTimeZone(Yii::$app->timezone->name);
                           <!-- Menu Footer-->
                           <li class="user-footer">
                             <div class="pull-left">
-                              <?= Html::a(Yii::t('app','Profile'), ['user/profile'], ['class'=>'btn btn-default btn-flat']) ?>
+                              <?= Html::a(Yii::t('app','Profile'), ['/user/profile'], ['class'=>'btn btn-default btn-flat']) ?>
                             </div>
                             <div class="pull-right">
-                              <?= Html::a(Yii::t('app','Logout'), ['user/logout'], ['class'=>'btn btn-default btn-flat', 'data-method'=>'post']) ?>
+                              <?= Html::a(Yii::t('app','Logout'), ['/user/logout'], ['class'=>'btn btn-default btn-flat', 'data-method'=>'post']) ?>
                             </div>
                           </li>
                         </ul>
