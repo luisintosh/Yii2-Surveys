@@ -32,6 +32,8 @@ class ContactList extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
+            [['id_user'], 'required'],
+            [['id_user'], 'integer'],
             [['created_at', 'updated_at'], 'safe'],
             [['title'], 'string', 'max' => 255]
         ];
@@ -44,6 +46,7 @@ class ContactList extends \yii\db\ActiveRecord
     {
         return [
             'id' => Yii::t('app', 'ID'),
+            'id_user' => Yii::t('app', 'ID'),
             'title' => Yii::t('app', 'Title'),
             'created_at' => Yii::t('app', 'Created On'),
             'updated_at' => Yii::t('app', 'Updated On'),

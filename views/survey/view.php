@@ -128,7 +128,7 @@ $this->registerCss(".middle-area {background: url('$design->background_img') no-
 
 <footer class="footer">
     <div class="container">
-        <p class="text-muted">Copyright &copy; <?= Yii::$app->settings->get('app_name') ?> <?= date('Y') ?></p>
+        <p class="text-muted">Copyright &copy; <?= Yii::$app->settings->get('app_name') ?> <?= date('Y') ?> | <?= Yii::t('app','Developed by') ?> <a href="http://www.luism.net">Luis Mendieta</a>.</p>
     </div>
 </footer>
 

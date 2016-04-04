@@ -66,6 +66,7 @@ class ContactsController extends Controller
     public function actionCreate()
     {
         $model = new ContactList();
+        $model->id_user = Yii::$app->user->id;
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
             return $this->redirect(['/contact-manager/', 'contactListID' => $model->id]);
@@ -137,7 +138,7 @@ class ContactsController extends Controller
      */
     protected function findModel($id)
     {
-        if (($model = ContactList::findOne($id)) !== null) {
+        if ((($model = ContactList::findOne($id)) !== null)  && (($model->id_user == Yii::$app->user->id) || ( Yii::$app->user->can('admin')) )) {
             return $model;
         } else {
             throw new NotFoundHttpException('The requested page does not exist.');

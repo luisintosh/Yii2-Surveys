@@ -52,7 +52,12 @@ class SiteController extends Controller
 
     public function actionIndex()
     {
-        return $this->render('index');
+        if (Yii::$app->user->isGuest) {
+            return $this->render('index');
+        }
+        else {
+            return $this->redirect(['/survey']);
+        }
     }
 
     public function actionContact()
@@ -68,8 +73,8 @@ class SiteController extends Controller
         ]);
     }
 
-    public function actionAbout()
+    public function actionHowWorks()
     {
-        return $this->render('about');
+        return $this->render('how-works');
     }
 }

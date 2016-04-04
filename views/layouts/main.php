@@ -55,7 +55,7 @@ Yii::$app->set('mailer', [
         <nav class="navbar navbar-static-top">
             <div class="container">
                 <div class="navbar-header">
-                    <a href="../../index2.html" class="navbar-brand"><b><?= Yii::$app->settings->get('app_name') ?></b></a>
+                    <?= Html::a(Yii::$app->settings->get('app_name'), ['/'], ['class'=>'navbar-brand']) ?>
                     <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar-collapse">
                         <i class="fa fa-bars"></i>
                     </button>
@@ -72,7 +72,7 @@ Yii::$app->set('mailer', [
                                 'template' => '<a href="{url}"><i class="fa fa-question"></i> {label}</a>',
                             ],
                             ['label' => Yii::t('app','Contact'),
-                                'url' => ['/site/how-works'],
+                                'url' => ['/site/contact'],
                                 'template' => '<a href="{url}"><i class="fa fa-envelope"></i> {label}</a>',
                             ],
                         ],
@@ -102,7 +102,6 @@ Yii::$app->set('mailer', [
 
                             <p>
                               <?= Yii::$app->user->identity->username ?>
-                              <small><?= Yii::t('app','Member since {date}') ?></small>
                             </p>
                           </li>
                           <!-- Menu Footer-->
@@ -126,6 +125,7 @@ Yii::$app->set('mailer', [
                                 'template' => '<a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="fa fa-sticky-note"></i> {label} <span class="caret"></span></a>',
                                 'submenuTemplate' => '<ul class="dropdown-menu" role="menu">{items}</ul>',
                                 'options' => ['class' => 'dropdown'],
+                                'visible' => !Yii::$app->user->isGuest,
                                 'items' => [
                                     [
                                         'label' => Yii::t('app','Overview'),
@@ -141,6 +141,7 @@ Yii::$app->set('mailer', [
                                 'template' => '<a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="fa fa-male"></i> {label} <span class="caret"></span></a>',
                                 'submenuTemplate' => '<ul class="dropdown-menu" role="menu">{items}</ul>',
                                 'options' => ['class' => 'dropdown'],
+                                'visible' => !Yii::$app->user->isGuest,
                                 'items' => [
                                     [
                                         'label' => Yii::t('app','Overview'),
@@ -197,8 +198,6 @@ Yii::$app->set('mailer', [
 </div>
 <!-- ./wrapper -->
 <div id="loading"><i class="fa fa-refresh fa-5x fa-spin"></i></div>
-<!-- Go to www.addthis.com/dashboard to customize your tools -->
-<script type="text/javascript" src="//s7.addthis.com/js/300/addthis_widget.js#pubid=ra-56ed7f8dd41f7d00"></script>
 
 <?= $this->render('alerts') ?>
 

@@ -21,9 +21,9 @@ class ClientAsset extends AssetBundle
         'css/client_style.css',
     ];
     public $js = [
-    	'https://s7.addthis.com/js/300/addthis_widget.js#pubid=ra-56ed7f8dd41f7d00',
         'js/jquery.browser.min.js',
         'js/client_app.js',
+        'https://s7.addthis.com/js/300/addthis_widget.js#pubid=ra-56ed7f8dd41f7d00',
     ];
 }
 

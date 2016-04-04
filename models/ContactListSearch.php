@@ -18,7 +18,7 @@ class ContactListSearch extends ContactList
     public function rules()
     {
         return [
-            [['id', 'created_at', 'updated_at'], 'integer'],
+            [['id', 'id_user', 'created_at', 'updated_at'], 'integer'],
             [['title'], 'safe'],
         ];
     }
@@ -41,7 +41,7 @@ class ContactListSearch extends ContactList
      */
     public function search($params)
     {
-        $query = ContactList::find();
+        $query = ContactList::find()->where(['id_user'=>Yii::$app->user->id]);
 
         // add conditions that should always apply here
 
