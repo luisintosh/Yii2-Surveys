@@ -29,7 +29,7 @@ class m160315_061231_create_interview extends Migration
             'id' => $this->primaryKey(),
             'id_interview' => $this->integer()->notNull(),
             'id_question' => $this->integer()->notNull(),
-            'number' => $this->integer()->notNull(),
+            'id_question_option' => $this->integer()->notNull(),
             'a_number' => $this->integer(),
             'a_text' => $this->text(),
             'a_bool' => $this->boolean(),
@@ -41,6 +41,7 @@ class m160315_061231_create_interview extends Migration
         $this->addForeignKey('fk_interview_survey', 'interview', 'id_survey', 'survey', 'id', 'CASCADE', 'CASCADE');
         $this->addForeignKey('fk_interview_answer_interview', 'interview_answer', 'id_interview', 'interview', 'id', 'CASCADE', 'CASCADE');
         $this->addForeignKey('fk_interview_answer_question', 'interview_answer', 'id_question', 'question', 'id', 'CASCADE', 'CASCADE');
+        $this->addForeignKey('fk_interview_answer_question_option', 'interview_answer', 'id_question_option', 'question_option', 'id', 'CASCADE', 'CASCADE');
     }
 
     public function down()

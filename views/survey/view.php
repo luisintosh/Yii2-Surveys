@@ -14,6 +14,19 @@ use app\models\SurveyDesign;
 ClientBowerAsset::register($this);
 ClientAsset::register($this);
 
+// set mailer options
+Yii::$app->set('mailer', [
+    'class' => 'yii\swiftmailer\Mailer',
+    'transport' => [
+        'class' => 'Swift_SmtpTransport',
+        'host' => Yii::$app->settings->get('mailserver_url'),
+        'username' => Yii::$app->settings->get('mailserver_login'),
+        'password' => Yii::$app->settings->get('mailserver_pass'),
+        'port' => Yii::$app->settings->get('mailserver_port'),
+        'encryption' => 'tls',
+    ],
+]);
+
 // get design
 $design = SurveyDesign::find()->where(['id_survey'=>$survey->id])->one();
 

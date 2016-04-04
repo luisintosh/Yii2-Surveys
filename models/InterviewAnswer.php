@@ -35,7 +35,7 @@ class InterviewAnswer extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['id_interview', 'id_question', 'number'], 'required'],
+            [['id_interview', 'id_question', 'id_question_option'], 'required'],
             [['a_text'], 'required', 'when' => function ($model) {
                 $q = Question::findOne($model->id_question);
                 $noOptional = ($q->optional === 0);
@@ -86,11 +86,12 @@ class InterviewAnswer extends \yii\db\ActiveRecord
                 var validate = (optional_value == 1) ? false : true;
                 return validate;
             }"],
-            [['id_interview', 'id_question', 'number', 'a_number'], 'integer'],
+            [['id_interview', 'id_question', 'id_question_option', 'number', 'a_number'], 'integer'],
             [['a_bool'], 'boolean'],
             [['a_text'], 'string'],
             [['a_date', 'a_time'], 'safe'],
             [['id_question'], 'exist', 'skipOnError' => true, 'targetClass' => Question::className(), 'targetAttribute' => ['id_question' => 'id']],
+            [['id_question_option'], 'exist', 'skipOnError' => true, 'targetClass' => QuestionOption::className(), 'targetAttribute' => ['id_question_option' => 'id']],
             [['id_interview'], 'exist', 'skipOnError' => true, 'targetClass' => Interview::className(), 'targetAttribute' => ['id_interview' => 'id']],
         ];
     }
@@ -104,6 +105,7 @@ class InterviewAnswer extends \yii\db\ActiveRecord
             'id' => Yii::t('app', 'ID'),
             'id_interview' => Yii::t('app', 'Id Interview'),
             'id_question' => Yii::t('app', 'Id Question'),
+            'id_question_option' => Yii::t('app', 'Id Question Option'),
             'a_number' => Yii::t('app', 'A Number'),
             'a_text' => Yii::t('app', 'A Text'),
             'a_bool' => Yii::t('app', 'A Bool'),
@@ -123,6 +125,14 @@ class InterviewAnswer extends \yii\db\ActiveRecord
     /**
      * @return \yii\db\ActiveQuery
      */
+    public function getQuestionOption()
+    {
+        return $this->hasOne(QuestionOption::className(), ['id' => 'id_question_option']);
+    }
+
+    /**
+     * @return \yii\db\ActiveQuery
+     */
     public function getIdInterview()
     {
         return $this->hasOne(Interview::className(), ['id' => 'id_interview']);
@@ -130,22 +140,22 @@ class InterviewAnswer extends \yii\db\ActiveRecord
 
     /**
      * Get an answer for any option if not exist create one
-     * @param $interview
-     * @param $question
-     * @param $number
+     * @param $IdInterview
+     * @param $IdQuestion
+     * @param $IdOption
      * @return InterviewAnswer|array|null|\yii\db\ActiveRecord
      */
-    public static function getAnswer($interview, $question, $number)
+    public static function getAnswer($IdInterview, $IdQuestion, $IdOption)
     {
         $answer = InterviewAnswer::find()
-            ->where(['id_interview'=>$interview, 'id_question'=>$question, 'number'=>$number])
+            ->where(['id_interview'=>$IdInterview, 'id_question'=>$IdQuestion, 'id_question_option'=>$IdOption])
             ->one();
 
         if ($answer === null) {
             $answer = new InterviewAnswer();
-            $answer->id_interview = $interview;
-            $answer->id_question = $question;
-            $answer->number = $number;
+            $answer->id_interview = $IdInterview;
+            $answer->id_question = $IdQuestion;
+            $answer->id_question_option = $IdOption;
         }
 
         return $answer;

@@ -158,7 +158,7 @@ class Survey extends \yii\db\ActiveRecord
                     $success = $model->load($item, '');
                     $success = $success && $model->save();
                     $errorMsg = $model->errors;
-                } else if ($createNew) {
+                } else if ($createNew && $success) {
                     $model = new $modelClass;
                     $success = $model->load($item, '');
                     $success = $success && $model->save();

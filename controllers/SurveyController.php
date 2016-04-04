@@ -264,7 +264,7 @@ class SurveyController extends \yii\web\Controller
      */
     protected function findModel($id)
     {
-        if ((($model = Survey::findOne(Survey::numhash($id))) !== null) && ($model->id_user == Yii::$app->user->id) || ( Yii::$app->user->can('admin') )) {
+        if ((($model = Survey::findOne(Survey::numhash($id))) !== null) && (($model->id_user == Yii::$app->user->id) || ( Yii::$app->user->can('admin')) )) {
             return $model;
         } else {
             throw new NotFoundHttpException(Yii::t('app','The requested page does not exist.'));

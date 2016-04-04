@@ -213,6 +213,16 @@ $optionN = 0;
                                                         // normal option
                                                         $questionOptions[] = QuestionOption::create($question->id, Yii::t('app','Answer'));
                                                     }
+                                                    $otherKey = false;
+                                                    foreach ($questionOptions as $key => $questionOption) {
+                                                        if ($questionOption->title == QuestionOption::$other_option_id) {
+                                                            $otherKey = true;
+                                                        }
+                                                    }
+                                                    if (!$otherKey) {
+                                                        // other option
+                                                        $questionOptions[] = QuestionOption::create($question->id, QuestionOption::$other_option_id);
+                                                    }
 
                                                     $questionElemVisible = ($question->id_group_type == GroupType::$SINGLE_CHOICE
                                                         || $question->id_group_type == GroupType::$LINEAR_SCALE

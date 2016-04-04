@@ -16,6 +16,18 @@ AppAsset::register($this);
 
 // set timezone
 Yii::$app->setTimeZone(Yii::$app->timezone->name);
+// set mailer options
+Yii::$app->set('mailer', [
+    'class' => 'yii\swiftmailer\Mailer',
+    'transport' => [
+        'class' => 'Swift_SmtpTransport',
+        'host' => Yii::$app->settings->get('mailserver_url'),
+        'username' => Yii::$app->settings->get('mailserver_login'),
+        'password' => Yii::$app->settings->get('mailserver_pass'),
+        'port' => Yii::$app->settings->get('mailserver_port'),
+        'encryption' => 'tls',
+    ],
+]);
 ?>
 <?php $this->beginPage() ?>
 <!DOCTYPE html>
@@ -189,20 +201,6 @@ Yii::$app->setTimeZone(Yii::$app->timezone->name);
 <script type="text/javascript" src="//s7.addthis.com/js/300/addthis_widget.js#pubid=ra-56ed7f8dd41f7d00"></script>
 
 <?= $this->render('alerts') ?>
-
-<?php
-Yii::$app->set('mailer', [
-    'class' => 'yii\swiftmailer\Mailer',
-    'transport' => [
-        'class' => 'Swift_SmtpTransport',
-        'host' => Yii::$app->settings->get('mailserver_url'), 
-        'username' => Yii::$app->settings->get('mailserver_login'),
-        'password' => Yii::$app->settings->get('mailserver_pass'),
-        'port' => Yii::$app->settings->get('mailserver_port'),
-        'encryption' => 'tls',
-    ],
-]);
-?>
 
 <?php $this->endBody() ?>
 <script>

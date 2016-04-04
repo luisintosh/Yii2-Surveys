@@ -12,10 +12,36 @@ $(function () {
         format: 'HH:mm:ss'
     });
 
-    // copy text to radio button value
-    $('.other-option input[type=radio] + input[type=text]').on('input propertychange paste', function (e) {
-        $(this).parent().find('input[type=radio]').attr({'value': this.value});
+    $('.radio-btn:checked').each(function (i,e) {
+        var id = e.dataset.id;
+        $(e).closest('.answer-container').find('.id-question-option').attr({'disabled':false, 'value': id});
     });
+    $('.radio-btn').on('change', function (e) {
+        var id = this.dataset.id;
+        $(this).closest('.answer-container').find('.id-question-option').attr({'disabled':false, 'value': id});
+    });
+    // copy text to radio button value
+    $('.other-option-text').on('input propertychange paste', function (e) {
+        var id = this.dataset.id;
+        $(this).closest('.answer-container').find('input[data-other]').attr({'value': this.value});
+    });
+    // move "other" option to end
+    $('.radio-options').each(function (i,e) {
+        var inputLen = $(this).find('label input').length,
+            inputOther = null;
+        $(this).find('label').addClass('col-md-3');
+
+        $(this).find('label input').each(function (i2, e2) {
+            if ('other' in e2.dataset) {
+                inputOther = $(e2).parent();
+            }
+
+            if (i2 == inputLen-1 && inputOther != null) {
+                $(inputOther).closest('.radio-options').append($(inputOther));
+            }
+        });
+    });
+
 
     // set data from client
     $('#interview-web_browser').val($.browser.name);
