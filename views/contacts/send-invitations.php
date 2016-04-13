@@ -17,7 +17,7 @@ if (Yii::$app->request->isPost && isset(Yii::$app->request->queryParams['contact
 
     foreach ($contacts as $contact) {
         $messages[] = Yii::$app->mailer->compose()
-            ->setFrom(['user@mail.com'=>Yii::$app->settings->get('app_name')])
+            ->setFrom(['user@mail.com'=>settings('website_title')])
             ->setTo($contact->contact_email)
             ->setSubject(Yii::t('app', 'You have a new request to answer a survey'))
             ->setTextBody(Yii::t('app', 'You have a new request to answer a survey: {survey_title}, URL: {survey_url}', ['survey_title'=>Html::encode($survey->title),'survey_url'=>\yii\helpers\Url::to(['/survey/results', 'id'=>$survey->getId()])]))

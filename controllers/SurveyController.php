@@ -43,6 +43,11 @@ class SurveyController extends \yii\web\Controller
                         'allow' => true,
                         'roles' => ['@'],
                     ],
+                    [
+                        'allow' => true,
+                        'actions' => ['view'],
+                        'roles' => ['?'],
+                    ],
                     // everything else is denied
                 ],
             ],
@@ -177,7 +182,10 @@ class SurveyController extends \yii\web\Controller
 
     public function actionView($id, $u=null, $email=null)
     {
-        $survey = $this->findModel($id);
+        //$survey = $this->findModel($id);
+        if (($survey = Survey::findOne(Survey::numhash($id))) == null) {
+            throw new NotFoundHttpException(Yii::t('app','The requested page does not exist.'));
+        }
         $interview = Interview::find()->where(['unique'=>$u])->one();
         $post = Yii::$app->request->post();
         $surveySent = false;

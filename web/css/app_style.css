@@ -1,6 +1,6 @@
 /* sitio web */
 body {
-    background: url('../img/background.png') !important;
+    /*background: url('../img/background.png') !important;*/
 }
 .inline {
     display: inline;
@@ -32,6 +32,18 @@ body {
 
 .toast-top-right {
     top: 70px;
+}
+
+/* index */
+.carousel-caption {
+    background: rgba(0, 0, 0, 0.5);
+}
+
+.white-box {
+    background: white;
+}
+.white-box, .default-box {
+    padding: 30px 0;
 }
 
 /* overwrite */

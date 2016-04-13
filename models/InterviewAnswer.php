@@ -86,7 +86,7 @@ class InterviewAnswer extends \yii\db\ActiveRecord
                 var validate = (optional_value == 1) ? false : true;
                 return validate;
             }"],
-            [['id_interview', 'id_question', 'id_question_option', 'number', 'a_number'], 'integer'],
+            [['id_interview', 'id_question', 'id_question_option', 'a_number'], 'integer'],
             [['a_bool'], 'boolean'],
             [['a_text'], 'string'],
             [['a_date', 'a_time'], 'safe'],

@@ -105,7 +105,7 @@ if (! ($preferences->allow_multi_submissions)) {
 if ($preferences->send_response_notif) {
     try {
         Yii::$app->mailer->compose()
-            ->setFrom(['user@mail.com'=>Yii::$app->settings->get('app_name')])
+            ->setFrom(['user@mail.com'=>settings('website_title')])
             ->setTo(User::findOne($survey->id_user)->email)
             ->setSubject(Yii::t('app', 'New response from {survey_title}', ['survey_title'=>Html::encode($survey->title)]))
             ->setTextBody(Yii::t('app', 'You have a new answer in your survey {survey_title}', ['survey_title'=>Html::encode($survey->title)]))

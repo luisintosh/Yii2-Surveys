@@ -4,6 +4,7 @@
 /* @var $content string */
 
 use yii\helpers\Html;
+use yii\helpers\Url;
 use yii\bootstrap\Nav;
 use yii\bootstrap\NavBar;
 use yii\widgets\Breadcrumbs;
@@ -16,18 +17,6 @@ AppAsset::register($this);
 
 // set timezone
 Yii::$app->setTimeZone(Yii::$app->timezone->name);
-// set mailer options
-Yii::$app->set('mailer', [
-    'class' => 'yii\swiftmailer\Mailer',
-    'transport' => [
-        'class' => 'Swift_SmtpTransport',
-        'host' => Yii::$app->settings->get('mailserver_url'),
-        'username' => Yii::$app->settings->get('mailserver_login'),
-        'password' => Yii::$app->settings->get('mailserver_pass'),
-        'port' => Yii::$app->settings->get('mailserver_port'),
-        'encryption' => 'tls',
-    ],
-]);
 ?>
 <?php $this->beginPage() ?>
 <!DOCTYPE html>
@@ -36,8 +25,8 @@ Yii::$app->set('mailer', [
     <meta charset="<?= Yii::$app->charset ?>">
     <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
     <?= Html::csrfMetaTags() ?>
-    <title><?= Html::encode($this->title) ?> | <?= Yii::$app->settings->get('app_name') ?></title>
-    <meta name="description" content="<?= Yii::$app->settings->get('app_description') ?>">
+    <title><?= Html::encode($this->title) ?> | <?= settings('website_title') ?></title>
+    <meta name="description" content="<?= settings('website_description') ?>">
     <?php $this->head() ?>
     <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
     <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
@@ -55,7 +44,7 @@ Yii::$app->set('mailer', [
         <nav class="navbar navbar-static-top">
             <div class="container">
                 <div class="navbar-header">
-                    <?= Html::a(Yii::$app->settings->get('app_name'), ['/'], ['class'=>'navbar-brand']) ?>
+                    <?= Html::a(settings('website_title'), ['/'], ['class'=>'navbar-brand']) ?>
                     <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar-collapse">
                         <i class="fa fa-bars"></i>
                     </button>
@@ -184,15 +173,21 @@ Yii::$app->set('mailer', [
   <!-- Content Wrapper. Contains page content -->
   <div class="content-wrapper">
     <!-- Main content -->
-    <section class="container container-app">
-        <?= $content ?>
-    </section>
+    <?php if (Url::current() == Url::to(['site/index'])): ?>
+        <section class="container-app">
+            <?= $content ?>
+        </section>
+    <?php else: ?>
+        <section class="container container-app">
+            <?= $content ?>
+        </section>
+    <?php endif ?>
     <!-- /.content -->
   </div>
   <!-- /.content-wrapper -->
   <footer class="main-footer">
     <div class="container">
-      <strong>Copyright &copy; <?= Yii::$app->settings->get('app_name') ?> <?= date('Y') ?> | <?= Yii::t('app','Developed by') ?> <a href="http://www.luism.net">Luis Mendieta</a>.</strong>
+      <strong>Copyright &copy; <?= settings('website_title') ?> <?= date('Y') ?> | <?= Yii::t('app','Developed by') ?> <a href="http://www.luism.net">Luis Mendieta</a>.</strong>
     </div>
   </footer>
 </div>
@@ -208,7 +203,7 @@ Yii::$app->set('mailer', [
   m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
   })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
 
-  ga('create', '<?= Yii::$app->settings->get('google_analytics_id') ?>', 'auto');
+  ga('create', '<?= settings('google_analytics_id') ?>', 'auto');
   ga('send', 'pageview');
 </script>
 </body>

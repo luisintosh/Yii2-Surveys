@@ -14,19 +14,6 @@ use app\models\SurveyDesign;
 ClientBowerAsset::register($this);
 ClientAsset::register($this);
 
-// set mailer options
-Yii::$app->set('mailer', [
-    'class' => 'yii\swiftmailer\Mailer',
-    'transport' => [
-        'class' => 'Swift_SmtpTransport',
-        'host' => Yii::$app->settings->get('mailserver_url'),
-        'username' => Yii::$app->settings->get('mailserver_login'),
-        'password' => Yii::$app->settings->get('mailserver_pass'),
-        'port' => Yii::$app->settings->get('mailserver_port'),
-        'encryption' => 'tls',
-    ],
-]);
-
 // get design
 $design = SurveyDesign::find()->where(['id_survey'=>$survey->id])->one();
 
@@ -50,9 +37,9 @@ $this->registerCss(".middle-area {background: url('$design->background_img') no-
 <html>
 <head>
     <meta charset="UTF-8">
-    <title><?= $survey->title ?> | <?= Yii::$app->settings->get('app_name') ?></title>
+    <title><?= $survey->title ?> | <?= settings('website_title') ?></title>
     <?= Html::csrfMetaTags() ?>
-    <meta name="description" content="<?= Yii::$app->settings->get('app_description') ?>">
+    <meta name="description" content="<?= settings('website_description') ?>">
     <?php $this->head() ?>
 
     <?= $this->registerCssFile('https://fonts.googleapis.com/css?family=Roboto|Oswald|Montserrat|Ubuntu|Fjalla+One|Indie+Flower|Bitter|Lobster|Bree+Serif|Chewy')?>
@@ -128,23 +115,11 @@ $this->registerCss(".middle-area {background: url('$design->background_img') no-
 
 <footer class="footer">
     <div class="container">
-        <p class="text-muted">Copyright &copy; <?= Yii::$app->settings->get('app_name') ?> <?= date('Y') ?> | <?= Yii::t('app','Developed by') ?> <a href="http://www.luism.net">Luis Mendieta</a>.</p>
+        <p class="text-muted">Copyright &copy; <?= settings('website_title') ?> <?= date('Y') ?> | <?= Yii::t('app','Developed by') ?> <a href="http://www.luism.net">Luis Mendieta</a>.</p>
     </div>
 </footer>
 
-<?php
-Yii::$app->set('mailer', [
-    'class' => 'yii\swiftmailer\Mailer',
-    'transport' => [
-        'class' => 'Swift_SmtpTransport',
-        'host' => Yii::$app->settings->get('mailserver_url'), 
-        'username' => Yii::$app->settings->get('mailserver_login'),
-        'password' => Yii::$app->settings->get('mailserver_pass'),
-        'port' => Yii::$app->settings->get('mailserver_port'),
-        'encryption' => 'tls',
-    ],
-]);
-?>
+<div id="loading"><i class="fa fa-refresh fa-5x fa-spin"></i></div>
 
 <?php $this->endBody() ?>
 <script>
@@ -153,7 +128,7 @@ Yii::$app->set('mailer', [
   m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
   })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
 
-  ga('create', '<?= Yii::$app->settings->get('google_analytics_id') ?>', 'auto');
+  ga('create', '<?= settings('google_analytics_id') ?>', 'auto');
   ga('send', 'pageview');
 </script>
 </body>

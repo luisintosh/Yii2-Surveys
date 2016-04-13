@@ -51,6 +51,8 @@ $(function () {
         $('#interview-ip_address').val(data.query);
     });
 
+    $('#loading').hide();
+
 });
 
 // show by sections

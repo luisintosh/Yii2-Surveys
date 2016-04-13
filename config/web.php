@@ -3,6 +3,8 @@
 $params = require(__DIR__ . '/params.php');
 /* Include debug functions */
 require_once(__DIR__.'/functions.php');
+/* Include configuration file */
+require_once(__DIR__ . '/settings.php');
 
 $config = [
     'id' => 'basic',
@@ -28,7 +30,14 @@ $config = [
             'class' => 'yii\swiftmailer\Mailer',
             'viewPath' => '@app/mail/layouts/html',
             'useFileTransport' => false,
-            'transport' => require(__DIR__ . '/mailer.php'),
+            'transport' => [
+                'class' => 'Swift_SmtpTransport',
+                'host' => settings('mailer')['mailserver_url'],
+                'username' => settings('mailer')['mailserver_login'],
+                'password' => settings('mailer')['mailserver_password'],
+                'port' => settings('mailer')['mailserver_port'],
+                'encryption' => 'tls',
+            ],
         ],
         'log' => [
             'traceLevel' => YII_DEBUG ? 3 : 0,
@@ -39,7 +48,7 @@ $config = [
                 ],
             ],
         ],
-        'db' => require(__DIR__ . '/db.php'),
+        'db' => settings('db'),
         /*
         'urlManager' => [
             'enablePrettyUrl' => true,
