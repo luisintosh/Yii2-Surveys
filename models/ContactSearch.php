@@ -39,9 +39,9 @@ class ContactSearch extends Contact
      *
      * @return ActiveDataProvider
      */
-    public function search($params)
+    public function search($params, $contactListID)
     {
-        $query = Contact::find();
+        $query = Contact::find()->where(['id_contact_list'=>$contactListID]);
 
         // add conditions that should always apply here
 

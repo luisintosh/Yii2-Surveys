@@ -75,4 +75,6 @@ class ContactList extends \yii\db\ActiveRecord
     {
         return $this->hasMany(SurveyContacts::className(), ['id_contact_list' => 'id']);
     }
+
+
 }

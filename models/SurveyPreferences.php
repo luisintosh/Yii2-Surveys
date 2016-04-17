@@ -4,6 +4,7 @@ namespace app\models;
 
 use Yii;
 use yii\behaviors\TimestampBehavior;
+use yii\helpers\Html;
 
 /**
  * This is the model class for table "survey_preferences".
@@ -72,6 +73,23 @@ class SurveyPreferences extends \yii\db\ActiveRecord
             'end_text' => Yii::t('app', 'Show custom "Thank you" text'),
             'end_redirect' => Yii::t('app', 'Redirect to own webpage (URL)'),
         ];
+    }
+
+    public function sendResponseNotification($email, $survey) {
+        /** @var Mailer $mailer */
+        /** @var Message $message */
+
+        // modify view path to module views
+        $mailer = Yii::$app->mailer;
+
+        // send email
+        $subject = settings('website_title') . " - " . Yii::t("user", "Email Confirmation");
+        $result = $mailer->compose('response_notif', ['subject'=>$subject, 'survey'=>$survey])
+            ->setTo($email)
+            ->setSubject(Yii::t('app', 'New response from {survey_title}', ['survey_title'=>Html::encode($survey->title)]))
+            ->send();
+
+        return $result;
     }
 
 }

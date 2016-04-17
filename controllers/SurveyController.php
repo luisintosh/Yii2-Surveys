@@ -183,6 +183,7 @@ class SurveyController extends \yii\web\Controller
     public function actionView($id, $u=null, $email=null)
     {
         //$survey = $this->findModel($id);
+        $survey = null;
         if (($survey = Survey::findOne(Survey::numhash($id))) == null) {
             throw new NotFoundHttpException(Yii::t('app','The requested page does not exist.'));
         }
@@ -192,7 +193,7 @@ class SurveyController extends \yii\web\Controller
         $preferences = $survey->getSurveyPreferences()->one();
         $today = Yii::$app->formatter->asTimestamp(time());
 
-        if ( !($today >= $preferences->start_at) || (!empty($preferences->end_at && !($today <= $preferences->end_at))) ) {
+        if ( !($today >= $preferences->start_at) || (!empty($preferences->end_at) && !($today <= $preferences->end_at)) ) {
             throw new NotFoundHttpException(Yii::t('app','The requested page does not exist.'));
         }
 

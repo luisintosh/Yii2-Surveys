@@ -50,7 +50,7 @@ class ContactManagerController extends Controller
         $model = new Contact();
 
         $searchModel = new ContactSearch();
-        $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
+        $dataProvider = $searchModel->search(Yii::$app->request->queryParams, $contactListID);
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
             $model = new Contact();

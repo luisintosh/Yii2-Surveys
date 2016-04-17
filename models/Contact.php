@@ -4,6 +4,8 @@ namespace app\models;
 
 use Yii;
 
+use yii\helpers\Html;
+
 /**
  * This is the model class for table "contact".
  *
@@ -56,5 +58,21 @@ class Contact extends \yii\db\ActiveRecord
     public function getIdContactList()
     {
         return $this->hasOne(ContactList::className(), ['id' => 'id_contact_list']);
+    }
+
+    public function sendInvitation($survey) {
+        /** @var Mailer $mailer */
+        /** @var Message $message */
+
+        // modify view path to module views
+        $mailer = Yii::$app->mailer;
+
+        // send email
+        $subject = settings('website_title') . " - " . Yii::t('app', 'You have a new request to answer a survey: {survey_title}', ['survey_title'=>Html::encode($survey->title)]);
+        $result = $mailer->compose('invitation_notif', ['survey'=>$survey, 'email'=>$this->contact_email])
+            ->setTo($this->contact_email)
+            ->setSubject($subject);
+
+        return $result;
     }
 }

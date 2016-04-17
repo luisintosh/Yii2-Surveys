@@ -4,7 +4,11 @@ $params = require(__DIR__ . '/params.php');
 /* Include debug functions */
 require_once(__DIR__.'/functions.php');
 /* Include configuration file */
-require_once(__DIR__ . '/settings.php');
+function settings($key) {
+    $settings = json_decode(file_get_contents(__DIR__.'/settings.json'), true);
+    return $settings[$key];
+}
+
 
 $config = [
     'id' => 'basic',
@@ -28,14 +32,18 @@ $config = [
         ],
         'mailer' => [
             'class' => 'yii\swiftmailer\Mailer',
-            'viewPath' => '@app/mail/layouts/html',
+            'viewPath' => '@app/mail',
             'useFileTransport' => false,
+            'messageConfig' => [
+                'from' => [settings('mailer')['username'] => settings('website_title')], // this is needed for sending emails
+                'charset' => 'UTF-8',
+            ],
             'transport' => [
                 'class' => 'Swift_SmtpTransport',
-                'host' => settings('mailer')['mailserver_url'],
-                'username' => settings('mailer')['mailserver_login'],
-                'password' => settings('mailer')['mailserver_password'],
-                'port' => settings('mailer')['mailserver_port'],
+                'host' => settings('mailer')['mail_server'],
+                'username' => settings('mailer')['username'],
+                'password' => settings('mailer')['password'],
+                'port' => settings('mailer')['port'],
                 'encryption' => 'tls',
             ],
         ],
