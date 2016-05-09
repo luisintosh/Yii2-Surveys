@@ -29,7 +29,7 @@ $this->registerCss(".middle-area {background: url('$design->background_img') no-
     -webkit-background-size: cover;
     -moz-background-size: cover;
     -o-background-size: cover;
-    background-size: cover;}")
+    background-size: cover;}");
 
 ?>
 <?php $this->beginPage() ?>
@@ -62,9 +62,6 @@ $this->registerCss(".middle-area {background: url('$design->background_img') no-
                     <?= (!empty($survey->logo_url)) ? Html::img($survey->logo_url, ['class'=>'img-thumbnail', 'alt'=>'logo']) : '' ?>
                 </div>
                 <h1 class="font-theme"><?= Html::encode($survey->title) ?></h1>
-                <p class="lead">
-                    <?= $survey->description ?>
-                </p>
             </div>
         </div>
     </div>

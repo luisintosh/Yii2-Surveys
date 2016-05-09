@@ -15,4 +15,17 @@ $(function () {
             setTimeout(function () { focusedElement.select(); }, 50);
         });
 
+    // action on click
+    $('.btn-sendmail').click(function (e) {
+        e.preventDefault();
+        var contactList = this.dataset.contactlist;
+
+        $('#modal-sendmail').modal('show');
+        $('#surveycontacts-id_contact_list').val(contactList);
+    });
+
+    $('#btn-sendmail-form').click(function (e) {
+        //$('#loading').show();
+    });
+
 });

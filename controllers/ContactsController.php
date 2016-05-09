@@ -11,6 +11,7 @@ use yii\filters\VerbFilter;
 use yii\filters\AccessControl;
 
 use app\models\Survey;
+use app\models\SurveyContacts;
 
 /**
  * ContactsController implements the CRUD actions for ContactList model.
@@ -112,18 +113,27 @@ class ContactsController extends Controller
     public function actionSendInvitations($surveyID)
     {
         $survey = Survey::findOne(Survey::numhash($surveyID));
+        $surveyContacts = new SurveyContacts();
 
         $searchModel = new ContactListSearch();
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
 
+        $sendMails = false;
+
         if ($survey == null) {
             throw new NotFoundHttpException('The requested page does not exist.');
         } else {
+            if (Yii::$app->request->isPost && $surveyContacts->load(Yii::$app->request->post()) && $surveyContacts->save()) {
+                $sendMails = true;
+            }
 
             return $this->render('send-invitations',[
                 'survey' => $survey,
                 'searchModel' => $searchModel,
                 'dataProvider' => $dataProvider,
+                'surveyContacts' => $surveyContacts,
+                'surveyContacts' => $surveyContacts,
+                'sendMails' => $sendMails,
             ]);
         }
 

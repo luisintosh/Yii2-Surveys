@@ -27,6 +27,8 @@ Yii::$app->setTimeZone(Yii::$app->timezone->name);
     <?= Html::csrfMetaTags() ?>
     <title><?= Html::encode($this->title) ?> | <?= settings('website_title') ?></title>
     <meta name="description" content="<?= settings('website_description') ?>">
+    <link rel="icon" href="<?= Url::to('@web/favicon.ico') ?>" type="image/x-icon" />
+    <link rel="shortcut icon" href="<?= Url::to('@web/favicon.ico') ?>" type="image/x-icon" />
     <?php $this->head() ?>
     <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
     <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
@@ -74,9 +76,9 @@ Yii::$app->setTimeZone(Yii::$app->timezone->name);
                       <li class="bg-aqua">
                         <?= Html::a(Yii::t('app','Login'), ['/user/login'], ['class'=>'']) ?>
                       </li>
-                      <li class="bg-red">
-                        <?= Html::a(Yii::t('app','Register'), ['/user/register'], ['class'=>'']) ?>
-                      </li>
+                      <!-- <li class="bg-red">
+                        <?php //echo Html::a(Yii::t('app','Register'), ['/user/register'], ['class'=>'']) ?>
+                      </li> -->
                       <?php else: ?>
                       <!-- User -->
                       <li class="dropdown user user-menu">
@@ -172,6 +174,7 @@ Yii::$app->setTimeZone(Yii::$app->timezone->name);
 
   <!-- Content Wrapper. Contains page content -->
   <div class="content-wrapper">
+  
     <!-- Main content -->
     <?php if (Url::current() == Url::to(['site/index'])): ?>
         <section class="container-app">

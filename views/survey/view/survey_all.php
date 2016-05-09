@@ -47,6 +47,12 @@ $preferences = $survey->getSurveyPreferences()->one();
                 <div class="col-lg-12 text-center">
                     <div class="survey-header survey-bar survey-margin"></div>
                 </div>
+                <br>
+                <div class="survey-content"> 
+                    <div class="survey-margin">
+                        <?= $survey->description ?>
+                    </div>
+                </div>
                 <?php foreach ($sections as $section): ?>
                     <div class="col-lg-12">
                         <div class="survey-content">
@@ -106,7 +112,6 @@ $preferences = $survey->getSurveyPreferences()->one();
                                             ?>
 
                                             <div class="row answer-container">
-                                                <!-- <?= GroupType::$TEXT_ANSWER ?> -->
                                                 <?php if ($question->id_group_type == GroupType::$TEXT_ANSWER): ?>
                                                     <div class="hidden">
                                                         <?php
@@ -154,7 +159,7 @@ $preferences = $survey->getSurveyPreferences()->one();
                                                         ?>
                                                     </div>
                                                     <div class="col-md-6">
-                                                        <?= $form->field($answer, "[{$optionN}]".'a_number')->textarea()->label(false) ?>
+                                                        <?= $form->field($answer, "[{$optionN}]".'a_number')->textInput()->label(false) ?>
                                                     </div>
 
 
@@ -178,10 +183,11 @@ $preferences = $survey->getSurveyPreferences()->one();
                                                     echo $form->field($answer, "[{$optionN}]".'id_question_option')->hiddenInput(['class'=>'form-control id-question-option'])->label(false);
                                                     echo $form->field($question, "[{$optionN}]".'optional')->hiddenInput(['class'=>'optional-value'])->label(false);
 
+                                                    $GLOBALS['tempQ'] = ['id_interview'=>$interview->id, 'id_question'=>$question->id];
                                                     echo $form->field($answer, "[{$optionN}]".'a_text')->radioList($options, [
                                                         'class' => 'radio-options',
                                                         'item' => function ($index, $label, $name, $checked, $value) {
-                                                            $answer = InterviewAnswer::find()->where(['id_question_option'=>$value])->one();
+                                                            $answer = InterviewAnswer::find()->where(['id_interview'=>$GLOBALS['tempQ']['id_interview'], 'id_question'=>$GLOBALS['tempQ']['id_question'], 'id_question_option'=>$value])->one();
                                                             $val = $label;
                                                             if (isset($answer->a_text)) {
                                                                 $val = $answer->a_text;
@@ -197,7 +203,8 @@ $preferences = $survey->getSurveyPreferences()->one();
                                                             $res .= Html::radio($name, $checked, ['value' =>$val, 'data-id'=>$value, 'label'=>$label, 'class'=>'radio-btn', 'data-other'=>$OtherOption]);
                                                             return $res;
                                                         },
-                                                    ])->label(false)
+                                                    ])->label(false);
+                                                    unset($GLOBALS['tempQ']);
                                                     ?>
                                                     <?php if ($question->add_textbox): ?>
                                                         <div class="col-lg-12 form-inline text-right other-option-box">
@@ -265,9 +272,11 @@ $preferences = $survey->getSurveyPreferences()->one();
                                                                 ?>
                                                             </tr>
                                                             <tr class="active">
-                                                                <?= $form->field($answer, "[{$optionN}]".'a_text')->radioList($radioOptions, [
+                                                                <?php
+                                                                $GLOBALS['tempQ'] = ['id_interview'=>$interview->id, 'id_question'=>$question->id];
+                                                                echo $form->field($answer, "[{$optionN}]".'a_text')->radioList($radioOptions, [
                                                                     'item' => function ($index, $label, $name, $checked, $value) {
-                                                                        $answer = InterviewAnswer::find()->where(['id_question_option'=>$value])->one();
+                                                                        $answer = InterviewAnswer::find()->where(['id_interview'=>$GLOBALS['tempQ']['id_interview'], 'id_question'=>$GLOBALS['tempQ']['id_question'], 'id_question_option'=>$value])->one();
                                                                         $val = $label;
                                                                         if (isset($answer->a_text)) {
                                                                             $val = $answer->a_text;
@@ -280,7 +289,9 @@ $preferences = $survey->getSurveyPreferences()->one();
                                                                         $res .= '</td>';
                                                                         return $res;
                                                                     },
-                                                                ])->label(false) ?>
+                                                                ])->label(false);
+                                                                unset($GLOBALS['tempQ']);
+                                                                 ?>
                                                             </tr>
                                                             </tbody>
                                                         </table>
@@ -306,10 +317,11 @@ $preferences = $survey->getSurveyPreferences()->one();
                                                     echo $form->field($answer, "[{$optionN}]".'id_question_option')->hiddenInput(['class'=>'form-control id-question-option'])->label(false);
                                                     echo $form->field($question, "[{$optionN}]".'optional')->hiddenInput(['class'=>'optional-value'])->label(false);
 
+                                                    $GLOBALS['tempQ'] = ['id_interview'=>$interview->id, 'id_question'=>$question->id];
                                                     echo $form->field($answer, "[{$optionN}]".'a_bool')->radioList($options, [
                                                         'class' => 'radio-options',
                                                         'item' => function ($index, $label, $name, $checked, $value) {
-                                                            $answer = InterviewAnswer::find()->where(['id_question_option'=>$value])->one();
+                                                            $answer = InterviewAnswer::find()->where(['id_interview'=>$GLOBALS['tempQ']['id_interview'], 'id_question'=>$GLOBALS['tempQ']['id_question'], 'id_question_option'=>$value])->one();
 
                                                             $val = $label;
                                                             if (isset($answer->a_bool)) {
@@ -322,7 +334,8 @@ $preferences = $survey->getSurveyPreferences()->one();
                                                                 'label'=>$button, 'class'=>'radio-btn']);
                                                             return $res;
                                                         },
-                                                    ])->label(false)
+                                                    ])->label(false);
+                                                    unset($GLOBALS['tempQ']);
                                                     ?>
 
                                                 <?php elseif ($question->id_group_type == GroupType::$DATE_FIELD): ?>

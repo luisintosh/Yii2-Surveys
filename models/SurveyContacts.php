@@ -30,8 +30,9 @@ class SurveyContacts extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['id_survey', 'id_contact_list'], 'required'],
-            [['id_survey', 'id_contact_list'], 'integer']
+            [['id_survey', 'id_contact_list', 'mail_subject', 'mail_message',], 'required'],
+            [['id_survey', 'id_contact_list'], 'integer'],
+            [['mail_subject', 'mail_message',], 'string'],
         ];
     }
 
@@ -44,6 +45,8 @@ class SurveyContacts extends \yii\db\ActiveRecord
             'id' => Yii::t('app', 'ID'),
             'id_survey' => Yii::t('app', 'Id Survey'),
             'id_contact_list' => Yii::t('app', 'Id Contact List'),
+            'mail_subject' => Yii::t('app', 'Subject of the mail'),
+            'mail_message' => Yii::t('app', 'Message of the mail'),
         ];
     }
 

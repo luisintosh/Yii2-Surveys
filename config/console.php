@@ -1,9 +1,11 @@
 <?php
 
+/* Include debug functions */
+require_once(__DIR__.'/functions.php');
+
 Yii::setAlias('@tests', dirname(__DIR__) . '/tests/codeception');
 
 $params = require(__DIR__ . '/params.php');
-$db = require(__DIR__ . '/db.php');
 
 $config = [
     'id' => 'basic-console',
@@ -22,7 +24,7 @@ $config = [
                 ],
             ],
         ],
-        'db' => $db,
+        'db' => settings('db'),
     ],
     'params' => $params,
     'modules' => [

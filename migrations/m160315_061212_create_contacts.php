@@ -32,6 +32,8 @@ class m160315_061212_create_contacts extends Migration
             'id' => $this->primaryKey(),
             'id_survey' => $this->integer()->notNull(),
             'id_contact_list' => $this->integer()->notNull(),
+            'mail_subject' => $this->string(),
+            'mail_message' => $this->text(),
         ], $tableOptions);
 
 

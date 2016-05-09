@@ -1,22 +1,19 @@
 {
-  "website_title": "Surveys",
-  "website_description": "Create awesome surveys",
-  "website_logo": "@web/img/logo.png",
-
-  "db": {
-    "class": "yii\\db\\Connection",
-    "dsn": "mysql:host=localhost;dbname=survey",
-    "username": "root",
-    "password": "",
-    "charset": "utf8"
-  },
-
-  "mailer": {
-    "mail_server": "smtp.gmail.com",
-    "username": "fakemail.9208@gmail.com",
-    "password": "PruebaCorreo",
-    "port": "587"
-  },
-
-  "google_analytics_id": ""
+    "website_title": "Survey Tec",
+    "website_description": "Create awesome surveys",
+    "website_logo": "@web/img/logo.jpg",
+    "db": {
+        "class": "yii\\db\\Connection",
+        "dsn": "mysql:host=localhost;dbname=survey",
+        "username": "root",
+        "password": "",
+        "charset": "utf8"
+    },
+    "mailer": {
+        "mail_server": "smtp.gmail.com",
+        "username": "fakemail.9208@gmail.com",
+        "password": "PruebaCorreo",
+        "port": "587"
+    },
+    "google_analytics_id": ""
 }

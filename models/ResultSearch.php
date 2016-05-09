@@ -60,7 +60,9 @@ class ResultSearch extends Result
         ->innerJoin('question','question.id_survey_section = survey_section.id')
         ->innerJoin('interview','interview.id_survey = survey.id')
         ->innerJoin('interview_answer','interview_answer.id_interview = interview.id')
-        ->where(['survey.id'=>$surveyId]);
+        ->where(['AND','interview_answer.id_question=question.id','survey.id='.$surveyId]);
+
+        //dd($query->createCommand());
 
         // add conditions that should always apply here
         $dataProvider = new ActiveDataProvider([

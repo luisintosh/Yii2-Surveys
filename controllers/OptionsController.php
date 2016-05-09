@@ -38,17 +38,25 @@ class OptionsController extends \yii\web\Controller
 
     public function actionIndex()
     {
+        $settings = getAllSettings();
         $post = Yii::$app->request->post();
-        $models = AppOptions::find()->all();
-
+        
         if (Yii::$app->request->isPost) {
-            AppOptions::saveMultipleData(AppOptions::className(), $post);
-            return $this->redirect(['options/index']);
+            foreach ($settings as $k => $v) {
+                if (is_array($settings[$k]) && $k == 'mailer') {
+                    $settings[$k]['mail_server'] = $post[$k]['mail_server'];
+                    $settings[$k]['username'] = $post[$k]['username'];
+                    $settings[$k]['password'] = $post[$k]['password'];
+                    $settings[$k]['port'] = $post[$k]['port'];
+                }
+                elseif (!is_array($settings[$k])) {
+                    $settings[$k] = $post[$k];
+                }
+            }
+            saveAllSettings($settings);
         }
 
-        return $this->render('index', [
-            'models' => $models,
-        ]);
+        return $this->render('index', []);
     }
 
 }

@@ -3,15 +3,12 @@
 $params = require(__DIR__ . '/params.php');
 /* Include debug functions */
 require_once(__DIR__.'/functions.php');
-/* Include configuration file */
-function settings($key) {
-    $settings = json_decode(file_get_contents(__DIR__.'/settings.json'), true);
-    return $settings[$key];
-}
 
 
 $config = [
     'id' => 'basic',
+    'language' => 'es-MX',
+    'sourceLanguage' => 'en-US',
     'basePath' => dirname(__DIR__),
     'bootstrap' => ['log','timezone'],
     'components' => [

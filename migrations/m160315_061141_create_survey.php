@@ -42,7 +42,7 @@ class m160315_061141_create_survey extends Migration
             'show_question_number' => $this->boolean()->defaultValue(true),
             'randomize_questions' => $this->boolean()->defaultValue(false),
             'send_response_notif' => $this->boolean()->defaultValue(false),
-            'show_share_btns' => $this->boolean()->defaultValue(true),
+            'show_share_btns' => $this->boolean()->defaultValue(false),
             'password_protect' => $this->boolean()->defaultValue(false),
             'password_string' => $this->string(),
             'end_text' => $this->text(),

@@ -60,7 +60,7 @@ class Contact extends \yii\db\ActiveRecord
         return $this->hasOne(ContactList::className(), ['id' => 'id_contact_list']);
     }
 
-    public function sendInvitation($survey) {
+    public function sendInvitation($survey, $surveyContacts) {
         /** @var Mailer $mailer */
         /** @var Message $message */
 
@@ -68,10 +68,9 @@ class Contact extends \yii\db\ActiveRecord
         $mailer = Yii::$app->mailer;
 
         // send email
-        $subject = settings('website_title') . " - " . Yii::t('app', 'You have a new request to answer a survey: {survey_title}', ['survey_title'=>Html::encode($survey->title)]);
-        $result = $mailer->compose('invitation_notif', ['survey'=>$survey, 'email'=>$this->contact_email])
+        $result = $mailer->compose('mail_box', ['survey'=>$survey, 'email'=>$this->contact_email, 'surveyContacts'=>$surveyContacts])
             ->setTo($this->contact_email)
-            ->setSubject($subject);
+            ->setSubject($surveyContacts->mail_subject);
 
         return $result;
     }

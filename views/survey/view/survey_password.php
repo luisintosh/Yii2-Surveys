@@ -34,8 +34,10 @@ $preferences = $survey->getSurveyPreferences()->one();
 
                         <?php
                         $modelP = new SurveyPreferences();
-                        echo $form->field($modelP, 'password_string')->textInput()->label(Yii::t('app', 'Please enter a password:'));
+                        echo $form->field($modelP, 'password_string')->passwordInput()->label(Yii::t('app', 'Please enter a password:'));
                         ?>
+
+                        <input type="submit" class="btn btn-success" value="<?= Yii::t('app', 'Enter') ?>"></input>
                     </p>
                 </div>
 
